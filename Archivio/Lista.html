@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista Appuntamenti - TOUCH WELNESS</title>
+<title>Lista Appuntamenti SPA</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -20,84 +20,82 @@
   * { box-sizing: border-box; }
 
   /* NAVBAR E FILTRI */
-  .navbar { background: var(--bg-body); color: var(--text-main); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 20; border-bottom: 1px solid var(--border-line); width: 100%; flex-shrink: 0; }
-  .btn-menu { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 8px; font-weight: 900; cursor: pointer; display:flex; align-items:center; gap:5px; font-size: 13px; box-shadow: 0 3px 0 #b45309; }
+  .navbar { background: var(--bg-body); color: var(--text-main); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; z-index: 20; border-bottom: 1px solid var(--border-line); width: 100%; flex-shrink: 0; }
+  .btn-menu { background: var(--gold); color: #0f172a; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 900; cursor: pointer; display:flex; align-items:center; gap:8px; font-size: 14px; box-shadow: 0 3px 0 #b45309; }
   .btn-menu:active { transform: translateY(3px); box-shadow: none; }
 
-  .top-bar { background: var(--bg-panel); padding: 15px 20px; display: flex; flex-direction: column; gap: 15px; border-bottom: 2px solid var(--border-line); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-  .filter-row { display: flex; gap: 10px; width: 100%; max-width: 1000px; margin: 0 auto; align-items: center; flex-wrap: wrap; }
+  .top-bar { background: var(--bg-panel); padding: 15px 25px; display: flex; flex-direction: column; gap: 15px; border-bottom: 2px solid var(--border-line); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+  .filter-row { display: flex; gap: 15px; width: 100%; max-width: 1400px; margin: 0 auto; align-items: center; flex-wrap: wrap; }
   
-  .search-box { display: flex; align-items: center; background: var(--bg-body); padding: 10px 15px; border-radius: 8px; flex: 1; min-width: 200px; border: 1px solid var(--border-line); }
+  .search-box { display: flex; align-items: center; background: var(--bg-body); padding: 12px 15px; border-radius: 8px; flex: 1; min-width: 250px; border: 1px solid var(--border-line); }
   .search-box input { border: none; background: transparent; color: var(--text-main); font-size: 14px; outline: none; width: 100%; margin-left: 10px; }
-  
-  .filter-select { background: var(--bg-body); color: var(--text-main); border: 1px solid var(--border-line); padding: 10px 15px; border-radius: 8px; outline: none; font-size: 14px; font-weight: bold; cursor: pointer; color-scheme: dark; }
+  .filter-select { background: var(--bg-body); color: var(--text-main); border: 1px solid var(--border-line); padding: 12px 15px; border-radius: 8px; outline: none; font-size: 14px; font-weight: bold; cursor: pointer; color-scheme: dark; }
 
-  /* LISTA CARD E COLORI */
-  .main-content { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
-  .list-container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; gap: 15px; }
+  .main-content { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
+  .list-container { width: 100%; max-width: 1600px; display: flex; flex-direction: column; gap: 15px; }
 
-  .app-card { background: var(--bg-panel); border: 1px solid var(--border-line); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.2s; flex-wrap: wrap; gap: 15px; border-left: 6px solid var(--accent); }
+  /* TABELLA COMPATTA */
+  .table-responsive { width: 100%; overflow-x: auto; background: var(--bg-panel); border-radius: 12px; border: 1px solid var(--border-line); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .compact-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+  .compact-table th { padding: 15px; border-bottom: 2px solid var(--border-line); color: var(--text-muted); background: var(--bg-body); white-space: nowrap; font-size: 12px; font-weight: 900; text-transform: uppercase; position: sticky; top: 0; z-index: 2;}
   
-  /* COLORI DI STATO NELLA LISTA */
-  .app-card.eseguito-style { background: #fef9c3 !important; border-color: #ca8a04 !important; border-left: 6px solid #eab308 !important; }
-  .app-card.eseguito-style .app-name { color: #854d0e !important; }
-  .app-card.eseguito-style .app-details { color: #a16207 !important; }
+  .compact-table td { padding: 15px; border-bottom: 1px solid var(--border-line); color: var(--text-main); vertical-align: middle; transition: background-color 0.2s; }
+  
+  /* CLASSI DI EVIDENZIAZIONE RIGA FORTI */
+  .compact-table tr:hover td { background-color: rgba(255,255,255,0.03); }
+  
+  .compact-table tr.row-eseguito td { background-color: rgba(251, 191, 36, 0.15) !important; }
+  .compact-table tr.row-eseguito td:first-child { border-left: 4px solid var(--gold); }
+  
+  .compact-table tr.row-pagato td { background-color: rgba(16, 185, 129, 0.15) !important; }
+  .compact-table tr.row-pagato td:first-child { border-left: 4px solid var(--green); }
 
-  .app-card.pagato-style { background: #dcfce7 !important; border-color: #059669 !important; border-left: 6px solid #10b981 !important; }
-  .app-card.pagato-style .app-name { color: #064e3b !important; }
-  .app-card.pagato-style .app-details { color: #047857 !important; }
+  .link-blue { color: #38bdf8; text-decoration: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+  .link-blue:hover { text-decoration: underline; color: #7dd3fc; }
   
-  .app-info { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 250px; }
-  .app-id { font-size: 12px; color: var(--text-main); background: rgba(0,0,0,0.2); cursor: pointer; font-weight: bold; padding: 4px 8px; border-radius: 6px; display: inline-block; width: fit-content; transition: 0.2s; }
-  .app-id:hover { opacity: 0.8; }
-  
-  .app-name { font-size: 18px; font-weight: 900; color: var(--text-main); text-transform: uppercase; cursor: pointer; transition: 0.2s; }
-  .app-name:hover { opacity: 0.7; text-decoration: underline; }
+  .client-name { font-weight: bold; text-transform: uppercase; cursor: pointer; transition: 0.2s; }
+  .client-name:hover { color: var(--accent); }
 
-  .app-details { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; font-weight: bold; }
-  .app-badge { background: rgba(255,255,255,0.1); color: inherit; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; border: 1px solid rgba(0,0,0,0.1); }
-  
-  .app-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .action-btn { background: var(--bg-body); border: 1px solid var(--border-line); border-radius: 8px; padding: 10px 15px; color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); flex: 1; min-width: 120px; }
-  .action-btn i { font-size: 16px; }
-  
-  .action-btn.done { background: rgba(16, 185, 129, 0.1); color: var(--green); border-color: rgba(16, 185, 129, 0.3); }
-  .action-btn.paid { background: rgba(251, 191, 36, 0.1); color: var(--gold); border-color: rgba(251, 191, 36, 0.3); }
-  .action-btn.delete { background: rgba(239, 68, 68, 0.1); color: var(--red); border-color: rgba(239, 68, 68, 0.3); }
+  /* MINISWITCH IN TABELLA */
+  .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-line); transition: .3s; border-radius: 20px; }
+  .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; box-shadow:0 2px 4px rgba(0,0,0,0.2);}
+  input:checked + .slider { background-color: var(--green); }
+  input:checked + .slider:before { transform: translateX(14px); }
+  input.eseg-switch:checked + .slider { background-color: var(--gold); }
 
-  /* MODAL EDIT E SCHEDA CLIENTE */
+  /* MODALI (EDIT, DELETE E CRM) */
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); padding: 15px; }
   .modal-box { background: var(--bg-panel); padding: 25px; border-radius: 16px; width: 100%; max-width: 450px; border: 1px solid var(--border-line); box-shadow: 0 10px 30px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto; }
-  
-  .modal-box.large-modal { max-width: 850px; padding: 35px; }
+  .modal-box.large-modal { max-width: 900px; padding: 40px; }
   .modal-box.large-modal h2 { font-size: 26px; }
-  .modal-box.large-modal .stat-card { padding: 20px; border-radius: 16px; }
+  .modal-box.large-modal .stat-card { padding: 20px; }
   .modal-box.large-modal .stat-val { font-size: 24px; font-weight: 900; }
-  .modal-box.large-modal .stat-lbl { font-size: 12px; margin-bottom: 8px; }
+  .modal-box.large-modal .form-input { font-size: 15px; padding: 15px; }
 
-  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
-  .data-table th { color: var(--text-muted); padding: 12px; border-bottom: 2px solid var(--border-line); font-size: 12px; text-transform: uppercase; background: var(--bg-body); position: sticky; top:0; }
-  .data-table td { padding: 12px; border-bottom: 1px solid var(--border-line); color: var(--text-main); }
-  
-  .form-group { margin-bottom: 12px; width: 100%; position: relative; }
-  .form-group label { display: block; font-size: 12px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
-  .form-input { width: 100%; padding: 14px; border: 1px solid var(--border-line); border-radius: 8px; font-size: 14px; outline:none; background: var(--bg-body); color: var(--text-main); color-scheme: dark; transition: 0.2s; }
+  .form-group { margin-bottom: 15px; width: 100%; position: relative; }
+  .form-group label { display: block; font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
+  .form-input { width: 100%; padding: 12px; border: 1px solid var(--border-line); border-radius: 8px; font-size: 14px; outline:none; background: var(--bg-body); color: var(--text-main); color-scheme: dark; transition: 0.2s; box-sizing: border-box;}
   .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3); }
 
   .btn-save { width: 100%; padding: 14px; background: var(--accent); color: #0f172a; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; margin-top: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size:14px; }
+  .btn-save i { font-size: 18px; }
   .btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
   .btn-wa { background: rgba(16, 185, 129, 0.1) !important; color: var(--green) !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; }
   .btn-del { background: rgba(239, 68, 68, 0.1) !important; color: var(--red) !important; border: 1px solid rgba(239, 68, 68, 0.3) !important; }
   .btn-outline { background: transparent !important; color: var(--text-muted) !important; border: 1px solid var(--border-line) !important; }
 
+  .tabs-header { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid var(--border-line); overflow-x: auto; padding-bottom:5px; }
+  .tab-btn { padding: 10px 20px; background: none; border: none; cursor: pointer; font-weight: bold; color: var(--text-muted); border-bottom: 3px solid transparent; white-space: nowrap; transition: 0.2s; font-size: 14px;}
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .stat-card { padding: 15px; text-align: center; background: var(--bg-body); border-radius: 12px; border: 1px solid var(--border-line); border-bottom: 4px solid var(--accent); }
+  .stat-lbl { font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase; margin-bottom:8px; }
+
   #toastBlue { visibility: hidden; min-width: 250px; background-color: var(--toast-blue, #2563eb); color: #fff; text-align: center; border-radius: 8px; padding: 12px; position: fixed; right: 30px; bottom: 30px; z-index: 9999; font-size: 14px; font-weight: bold; opacity: 0; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
   #toastBlue.show { visibility: visible; opacity: 1; bottom: 40px; }
-
-  @media (max-width: 768px) {
-      .app-card { flex-direction: column; align-items: flex-start; }
-      .app-actions { width: 100%; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px; justify-content: flex-start; }
-      .modal-box.large-modal { padding: 20px; }
-  }
 </style>
 </head>
 <body>
@@ -105,7 +103,7 @@
 <div id="toastBlue"><i class="material-icons-round" style="vertical-align:middle; font-size:16px;">info</i> <span id="toastMsg">Notifica</span></div>
 
 <div class="navbar">
-  <div style="font-weight:900; color:var(--text-main); letter-spacing:1px">LISTA APPUNTAMENTI</div>
+  <div style="font-weight:900; color:var(--text-main); letter-spacing:1px; font-size: 18px;">LISTA APPUNTAMENTI SPA</div>
   <button class="btn-menu" onclick="window.toggleMenu(event)">MENU <i class="material-icons-round">menu</i></button>
 </div>
 
@@ -113,58 +111,41 @@
     <div class="filter-row">
         <div class="search-box">
             <i class="material-icons-round" style="color:var(--text-muted)">search</i>
-            <input type="text" id="searchInput" placeholder="Cerca ospite o camera..." onkeyup="renderList()">
+            <input type="text" id="searchInput" placeholder="Cerca ospite, nr appuntamento, o camera..." onkeyup="renderList()">
         </div>
     </div>
     <div class="filter-row">
-        <select class="filter-select" id="fAnno" onchange="renderList()">
-            <option value="all">Tutti gli Anni</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option>
-        </select>
-        <select class="filter-select" id="fMese" onchange="renderList()">
-            <option value="all">Tutti i Mesi</option><option value="01">Gennaio</option><option value="02">Febbraio</option><option value="03">Marzo</option><option value="04">Aprile</option><option value="05">Maggio</option><option value="06">Giugno</option><option value="07">Luglio</option><option value="08">Agosto</option><option value="09">Settembre</option><option value="10">Ottobre</option><option value="11">Novembre</option><option value="12">Dicembre</option>
-        </select>
-        <select class="filter-select" id="fStato" onchange="renderList()">
-            <option value="all">Tutti gli Stati</option><option value="eseguito">Eseguiti</option><option value="pagato">Pagati</option><option value="dapagare">Da Pagare</option>
-        </select>
-        <select class="filter-select" id="fTipo" onchange="renderList()">
-            <option value="all">Tutte le Tipologie</option><option value="spa">SPA / Percorsi</option><option value="massaggi">Massaggi</option>
-        </select>
+        <select class="filter-select" id="fAnno" onchange="renderList()"><option value="all">Tutti gli Anni</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select>
+        <select class="filter-select" id="fMese" onchange="renderList()"><option value="all">Tutti i Mesi</option><option value="01">Gennaio</option><option value="02">Febbraio</option><option value="03">Marzo</option><option value="04">Aprile</option><option value="05">Maggio</option><option value="06">Giugno</option><option value="07">Luglio</option><option value="08">Agosto</option><option value="09">Settembre</option><option value="10">Ottobre</option><option value="11">Novembre</option><option value="12">Dicembre</option></select>
+        <select class="filter-select" id="fStato" onchange="renderList()"><option value="all">Tutti gli Stati</option><option value="eseguito">Eseguiti</option><option value="pagato">Pagati</option><option value="dapagare">Da Pagare</option></select>
+        <select class="filter-select" id="fTipo" onchange="renderList()"><option value="all">Tutte le Tipologie</option><option value="spa">SPA / Percorsi</option><option value="massaggi">Massaggi</option></select>
     </div>
 </div>
 
 <div class="main-content">
     <div class="list-container" id="listView">
-        <div style="text-align:center; padding:40px; color:var(--text-muted); font-weight:bold; font-size:16px;">Sincronizzazione in corso...</div>
+        <div style="text-align:center; padding:50px; color:var(--text-muted); font-weight:bold; font-size:16px;">Sincronizzazione in corso...</div>
     </div>
 </div>
 
 <div id="customerProfileModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
     <div class="modal-box large-modal">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid var(--border-line); padding-bottom: 15px; margin-bottom: 20px;">
-            <h2 style="margin:0; color:var(--accent); display:flex; align-items:center; gap:10px;">
-                <i class="material-icons-round" style="font-size:32px;">account_circle</i>
-                <span id="cp_nome" style="text-transform:uppercase;">Cliente</span>
-            </h2>
-            <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:28px;" onclick="document.getElementById('customerProfileModal').style.display='none'"><i class="material-icons-round">close</i></button>
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid var(--border-line); padding-bottom: 15px; margin-bottom: 25px;">
+            <h2 style="margin:0; color:var(--accent); display:flex; align-items:center; gap:10px;"><i class="material-icons-round" style="font-size:36px;">account_circle</i><span id="cp_nome" style="text-transform:uppercase;">Cliente</span></h2>
+            <button class="btn-outline" style="border:none !important; cursor:pointer; font-size:28px; padding:0; margin:0;" onclick="document.getElementById('customerProfileModal').style.display='none'"><i class="material-icons-round">close</i></button>
         </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px;">
             <div class="stat-card" style="border-bottom-color:var(--gold)"><div class="stat-lbl">Telefono</div><div id="cp_tel" class="stat-val" style="color:var(--text-main)">-</div></div>
             <div class="stat-card" style="border-bottom-color:var(--accent)"><div class="stat-lbl">Data Nascita</div><div id="cp_dob" class="stat-val" style="color:var(--text-main)">-</div></div>
-            <div class="stat-card" style="border-bottom-color:var(--green)"><div class="stat-lbl">Spesa SPA</div><div id="cp_spent" class="stat-val" style="color:var(--green)">0.00 €</div></div>
+            <div class="stat-card" style="border-bottom-color:var(--green)"><div class="stat-lbl">Spesa SPA Totale</div><div id="cp_spent" class="stat-val" style="color:var(--green)">0.00 €</div></div>
         </div>
-
-        <div class="form-group" style="margin-bottom:25px;">
-            <label style="font-size:13px;">Note Interne Cliente</label>
-            <textarea id="cp_note" rows="3" class="form-input" style="font-size:15px;" placeholder="Preferenze, allergie, note generali..." onchange="saveCustomerNote()"></textarea>
+        <div class="tabs-header"><button class="tab-btn active" onclick="sysOpenProfileTab('history', event)">Storico e Note Condivise</button><button class="tab-btn" onclick="sysOpenProfileTab('docs', event)">Moduli Privacy Firmati</button></div>
+        <div id="tab-history" class="tab-content active">
+            <div class="form-group" style="margin-bottom:25px;"><label>Note Interne Cliente</label><textarea id="cp_note" rows="3" class="form-input" placeholder="Preferenze, allergie..." onchange="sysSaveCustomerNote()"></textarea></div>
+            <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);"><table class="compact-table"><thead><tr><th>Data</th><th>Struttura SPA</th><th>Trattamento / Op.</th><th style="text-align:right;">Costo</th></tr></thead><tbody id="cp_history"></tbody></table></div>
         </div>
-
-        <h3 style="font-size:16px; color:var(--text-main); margin-top:0; border-bottom:1px solid var(--border-line); padding-bottom:8px; margin-bottom:15px;">Storico Trattamenti</h3>
-        <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);">
-            <table class="data-table">
-                <thead><tr><th>Data</th><th>Trattamento</th><th>Operatore</th><th style="text-align:right;">Costo</th></tr></thead>
-                <tbody id="cp_history"></tbody>
-            </table>
+        <div id="tab-docs" class="tab-content">
+            <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);"><table class="compact-table"><thead><tr><th>Data Creazione</th><th>Nome Documento</th><th style="text-align:right;">Visualizza</th></tr></thead><tbody id="cp_docs_table"></tbody></table></div>
         </div>
     </div>
 </div>
@@ -173,32 +154,13 @@
     <div class="modal-box">
         <h3 style="margin-top:0; color:var(--gold); border-bottom:1px solid var(--border-line); padding-bottom:10px; text-transform:uppercase;">Modifica Appuntamento</h3>
         <input type="hidden" id="eId"><input type="hidden" id="eOldDate"><input type="hidden" id="eCab">
-
-        <div style="display:flex; gap:10px">
-            <div class="form-group" style="flex:1"><label>Data</label><input type="date" id="eDate" class="form-input"></div>
-            <div class="form-group" style="flex:1"><label>Orario</label><input type="time" id="eOra" class="form-input"></div>
-        </div>
-        <div style="display:flex; gap:10px">
-            <div class="form-group" style="flex:1"><label>Camera</label><input type="number" id="eCam" class="form-input"></div>
-            <div class="form-group" style="flex:1.5"><label>Telefono</label><input type="tel" id="eTel" class="form-input"></div>
-        </div>
-        
+        <div style="display:flex; gap:10px"><div class="form-group" style="flex:1"><label>Data</label><input type="date" id="eDate" class="form-input"></div><div class="form-group" style="flex:1"><label>Orario</label><input type="time" id="eOra" class="form-input"></div></div>
+        <div style="display:flex; gap:10px"><div class="form-group" style="flex:1"><label>Camera</label><input type="number" id="eCam" class="form-input"></div><div class="form-group" style="flex:1.5"><label>Telefono</label><input type="tel" id="eTel" class="form-input"></div></div>
         <div class="form-group"><label>Ospite</label><input type="text" id="eCog" class="form-input"></div>
         <div class="form-group"><label>Operatore</label><input type="text" id="eOp" class="form-input"></div>
-        
-        <div style="background:var(--bg-body); padding:10px; border-radius:8px; margin-bottom:15px; border:1px solid var(--border-line);">
-            <div style="font-size:10px; color:var(--text-muted); font-weight:bold; margin-bottom:5px;">SERVIZIO PRENOTATO</div>
-            <div id="eServName" style="font-weight:bold; font-size:14px; color:var(--accent);"></div>
-        </div>
-
-        <div class="form-group"><label>Note</label><textarea id="eNote" class="form-input" rows="2"></textarea></div>
-
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
-            <button class="btn-save" onclick="saveEdit()"><i class="material-icons-round">save</i> SALVA MODIFICHE</button>
-            <button class="btn-save btn-wa" onclick="shareWA()"><i class="material-icons-round">whatsapp</i> INVIA WHATSAPP</button>
-            <button class="btn-save btn-del" onclick="promptDelete(document.getElementById('eId').value, document.getElementById('eOldDate').value)"><i class="material-icons-round">delete</i> ELIMINA PRENOTAZIONE</button>
-            <button class="btn-save btn-outline" onclick="document.getElementById('editModal').style.display='none'">ANNULLA</button>
-        </div>
+        <div style="background:var(--bg-body); padding:15px; border-radius:8px; margin-bottom:15px; border:1px solid var(--border-line);"><div style="font-size:11px; color:var(--text-muted); font-weight:bold; margin-bottom:5px;">SERVIZIO PRENOTATO</div><div id="eServName" style="font-weight:bold; font-size:15px; color:var(--accent);"></div></div>
+        <div class="form-group"><label>Note Interne</label><textarea id="eNote" class="form-input" rows="2"></textarea></div>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;"><button class="btn-save" onclick="saveEdit()"><i class="material-icons-round">save</i> SALVA MODIFICHE</button><button class="btn-save btn-wa" onclick="shareWA()"><i class="material-icons-round">whatsapp</i> INVIA WHATSAPP</button><button class="btn-save btn-del" onclick="promptDelete(document.getElementById('eId').value, document.getElementById('eOldDate').value)"><i class="material-icons-round">delete</i> ELIMINA PRENOTAZIONE</button><button class="btn-save btn-outline" onclick="document.getElementById('editModal').style.display='none'">ANNULLA</button></div>
     </div>
 </div>
 
@@ -207,17 +169,13 @@
         <h3 style="margin-top:0; color:var(--red); border-bottom:1px solid var(--border-line); padding-bottom:10px;">ELIMINA PRENOTAZIONE</h3>
         <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Inserisci il motivo dell'annullamento. L'azione sarà registrata.</p>
         <input type="text" id="delReasonInput" class="form-input" placeholder="Motivo cancellazione..." style="margin-bottom: 20px;" onkeypress="if(event.key==='Enter'){ event.preventDefault(); confirmDelete(); }">
-        <div style="display:flex; gap:8px">
-            <button class="btn-save btn-outline" style="flex:1; margin:0;" onclick="document.getElementById('deleteModal').style.display='none'">ANNULLA</button>
-            <button class="btn-save btn-del" style="flex:1; margin:0;" onclick="confirmDelete()">CONFERMA</button>
-        </div>
+        <div style="display:flex; gap:8px"><button class="btn-save btn-outline" style="flex:1; margin:0;" onclick="document.getElementById('deleteModal').style.display='none'">ANNULLA</button><button class="btn-save btn-del" style="flex:1; margin:0;" onclick="confirmDelete()">CONFERMA</button></div>
     </div>
 </div>
 
 <script>
     let allApps = [];
     let globalCustomersList = [];
-    
     const localStructId = localStorage.getItem("tw_structure_id");
     if(!localStructId) window.location.href="../login.html";
 
@@ -229,6 +187,9 @@
         document.getElementById("fMese").value = String(today.getMonth() + 1).padStart(2, '0');
     }
     initFilters();
+
+    function tToM(t) { if(!t) return 0; const p = t.split(':'); return (parseInt(p[0])||0)*60 + (parseInt(p[1])||0); }
+    function mToT(m) { return `${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`; }
 
     // Caricamento Dati
     firebase.database().ref('MASTER_ADMIN_DB/global_customers').on('value', snap => {
@@ -248,7 +209,7 @@
                         if(app && app.id) { 
                             allApps.push({
                                 id: app.id, fullDate: dateStr, ora: app.ora || "00:00", cam: app.cam || "", cog: app.cog || "N.D.",
-                                serv: app.serv || "Generico", op: app.op || "N.D.", price: app.price || 0, dur: app.dur || 30,
+                                serv: app.serv || "Generico", op: app.op || "-", price: app.price || 0, dur: app.dur || 30,
                                 eseguito: app.eseguito === true, pagato: app.pagato === true, tel: app.tel || "", note: app.note || "",
                                 cab: app.cab || "1", driveLink: app.driveLink || null
                             }); 
@@ -263,24 +224,6 @@
         }
     });
 
-    function toggleState(appId, date, field) {
-        const targetApp = allApps.find(a => a.id === appId);
-        if(!targetApp) return;
-        const newVal = !targetApp[field];
-        
-        firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + localStructId + '/app/' + date).once('value').then(snap => {
-            let dayArray = snap.val() || [];
-            if(!Array.isArray(dayArray)) dayArray = Object.values(dayArray);
-            const idx = dayArray.findIndex(x => x && x.id === appId);
-            if(idx > -1) {
-                dayArray[idx][field] = newVal;
-                firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + localStructId + '/app/' + date).set(dayArray).then(() => {
-                    showToast("Stato Aggiornato!");
-                });
-            }
-        });
-    }
-
     function renderList() {
         const query = (document.getElementById("searchInput").value || "").toLowerCase();
         const fAnno = document.getElementById("fAnno").value;
@@ -289,7 +232,7 @@
         const fTipo = document.getElementById("fTipo").value;
         
         let filtered = allApps.filter(a => {
-            const matchQuery = (a.cog || '').toLowerCase().includes(query) || (a.cam || '').toLowerCase().includes(query);
+            const matchQuery = (a.cog || '').toLowerCase().includes(query) || (a.cam || '').toLowerCase().includes(query) || (a.id || '').toLowerCase().includes(query);
             if(!matchQuery) return false;
 
             const dParts = (a.fullDate || "").split('-'); 
@@ -301,7 +244,7 @@
             if(fStato === 'dapagare' && a.pagato) return false;
 
             const servNome = (a.serv || '').toLowerCase();
-            if(fTipo === 'spa' && !servNome.includes('spa')) return false;
+            if(fTipo === 'spa' && !servNome.includes('spa') && !servNome.includes('percors')) return false;
             if(fTipo === 'massaggi' && !servNome.includes('massagg')) return false;
 
             return true;
@@ -314,71 +257,108 @@
             return;
         }
 
-        container.innerHTML = filtered.map(a => {
-            const isEseg = a.eseguito === true;
-            const isPaid = a.pagato === true;
-            
-            // LOGICA COLORI VISTA LISTA
-            let cardClass = "";
-            if (isPaid) cardClass = "pagato-style";
-            else if (isEseg) cardClass = "eseguito-style";
+        let html = `
+        <div class="table-responsive">
+            <table class="compact-table">
+                <thead>
+                    <tr>
+                        <th>Nr. App.</th>
+                        <th>Cliente</th>
+                        <th>Dalle</th>
+                        <th>Alle</th>
+                        <th style="min-width: 250px;">Trattamento</th>
+                        <th>Operatore</th>
+                        <th>Centro</th>
+                        <th>Prezzo</th>
+                        <th style="text-align:center">Eseguito</th>
+                        <th style="text-align:center">Pagato</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
 
+        html += filtered.map(a => {
+            const endMin = tToM(a.ora) + parseInt(a.dur || 30);
+            const endTime = mToT(endMin);
             const dParts = (a.fullDate || "").split('-');
             const displayDate = dParts.length === 3 ? `${dParts[2]}/${dParts[1]}/${dParts[0]}` : a.fullDate;
             const safeName = (a.cog || 'N.D.').replace(/'/g, "\\'");
+            const shortId = a.id.replace("APP", "").substring(0, 6);
+
+            // LOGICA COLORI FORTE SULLA RIGA
+            let rowClass = "";
+            if (a.pagato) rowClass = "row-pagato";
+            else if (a.eseguito) rowClass = "row-eseguito";
 
             return `
-            <div class="app-card ${cardClass}">
-                <div class="app-info">
-                    <div class="app-id" onclick="openEditModal('${a.id}')"><i class="material-icons-round" style="font-size:12px; vertical-align:middle;">edit</i> #${a.id}</div>
-                    <div class="app-name" onclick="openCustomerProfile(event, '${safeName}')">${a.cog || 'N.D.'} <span style="font-size:14px; font-weight:normal; opacity:0.7;">(Cam ${a.cam || '?'})</span></div>
-                    <div class="app-details">
-                        <i class="material-icons-round" style="font-size:14px;">calendar_today</i> ${displayDate} &nbsp;|&nbsp; 
-                        <i class="material-icons-round" style="font-size:14px;">schedule</i> ${a.ora} &nbsp;|&nbsp;
-                        <i class="material-icons-round" style="font-size:14px;">euro</i> ${a.price || 0} €
-                    </div>
-                    <div style="margin-top:5px; display:flex; gap:8px; flex-wrap:wrap;">
-                        <span class="app-badge">${a.serv || 'Generico'}</span>
-                        <span class="app-badge">Op: ${a.op || 'N.D.'}</span>
-                    </div>
-                </div>
-                <div class="app-actions">
-                    <button class="action-btn" style="display:${a.driveLink ? 'flex' : 'none'}; border-color:var(--accent); color:var(--accent);" onclick="window.open('${a.driveLink}', '_blank')">
-                        <i class="material-icons-round">picture_as_pdf</i> PRIVACY PDF
-                    </button>
-                    <button class="action-btn ${isEseg ? 'done' : ''}" onclick="toggleState('${a.id}', '${a.fullDate}', 'eseguito')">
-                        <i class="material-icons-round">${isEseg ? 'check_circle' : 'radio_button_unchecked'}</i> 
-                        ${isEseg ? 'ESEGUITO' : 'ESEGUITO'}
-                    </button>
-                    <button class="action-btn ${isPaid ? 'paid' : ''}" onclick="toggleState('${a.id}', '${a.fullDate}', 'pagato')">
-                        <i class="material-icons-round">${isPaid ? 'monetization_on' : 'account_balance_wallet'}</i> 
-                        ${isPaid ? 'PAGATO' : 'PAGATO'}
-                    </button>
-                    <button class="action-btn delete" onclick="promptDelete('${a.id}', '${a.fullDate}')">
-                        <i class="material-icons-round">delete</i> ELIMINA
-                    </button>
-                </div>
-            </div>
-            `;
+            <tr class="${rowClass}">
+                <td><span class="link-blue" onclick="openEditModal('${a.id}')">${shortId}</span></td>
+                <td><span class="client-name" onclick="sysOpenCustomerProfile(event, '${safeName}')">${a.cog || 'N.D.'}</span></td>
+                <td>${displayDate}<br><span style="color:var(--text-muted); font-weight:bold;">${a.ora}</span></td>
+                <td>${displayDate}<br><span style="color:var(--text-muted); font-weight:bold;">${endTime}</span></td>
+                <td style="white-space:normal; line-height:1.4;">${a.serv || '-'}</td>
+                <td>${a.op || '-'}</td>
+                <td>SPA Interna</td>
+                <td><b>€ ${parseFloat(a.price||0).toFixed(2).replace('.', ',')}</b></td>
+                <td style="text-align:center;">
+                    <label class="switch" style="margin:0;">
+                        <input type="checkbox" class="eseg-switch" onchange="toggleState('${a.id}', '${a.fullDate}', 'eseguito')" ${a.eseguito ? 'checked' : ''}>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+                <td style="text-align:center;">
+                    <label class="switch" style="margin:0;">
+                        <input type="checkbox" onchange="toggleState('${a.id}', '${a.fullDate}', 'pagato')" ${a.pagato ? 'checked' : ''}>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+                <td style="text-align:center;">
+                    <i class="material-icons-round" style="color:var(--red); font-size:18px; cursor:pointer;" onclick="promptDelete('${a.id}', '${a.fullDate}')">delete</i>
+                </td>
+            </tr>`;
         }).join('');
+
+        html += `</tbody></table></div>`;
+        container.innerHTML = html;
     }
 
-    // MEGA POPUP CLIENTE
+    function toggleState(appId, date, field) {
+        const targetApp = allApps.find(a => a.id === appId); if(!targetApp) return;
+        const newVal = !targetApp[field];
+        firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + localStructId + '/app/' + date).once('value').then(snap => {
+            let dayArray = snap.val() || []; if(!Array.isArray(dayArray)) dayArray = Object.values(dayArray);
+            const idx = dayArray.findIndex(x => x && x.id === appId);
+            if(idx > -1) {
+                dayArray[idx][field] = newVal;
+                firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + localStructId + '/app/' + date).set(dayArray).then(() => {
+                    showToast("Aggiornato!");
+                });
+            }
+        });
+    }
+
+    /* MEGA POPUP CRM IN LISTA APPUNTAMENTI */
     window.currentOpenedCustomerId = null;
-    window.openCustomerProfile = function(e, name) {
+    
+    window.sysOpenProfileTab = function(tabName, event) {
+        document.querySelectorAll('#customerProfileModal .tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('#customerProfileModal .tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+        if(event) event.currentTarget.classList.add('active');
+    };
+
+    window.sysOpenCustomerProfile = function(e, name) {
         e.stopPropagation();
         if(!name || name === 'N.D.') return;
         
-        let custData = { tel: 'N.D.', dataNascita: 'N.D.', note: '' };
+        let custData = { tel: 'N.D.', dataNascita: 'N.D.', note: '', docs: {} };
         let custId = null;
         const target = globalCustomersList.find(c => c.nome && c.nome.toLowerCase() === name.toLowerCase());
         
-        if(target) {
-            custId = target.id;
-            custData = target;
-        }
+        if(target) { custId = target.id; custData = target; }
 
-        document.getElementById('cp_nome').innerText = name.toUpperCase();
+        document.getElementById('cp_nome').innerText = name;
         document.getElementById('cp_tel').innerText = custData.tel || 'N.D.';
         document.getElementById('cp_dob').innerText = custData.dataNascita ? custData.dataNascita.split('-').reverse().join('/') : 'N.D.';
         document.getElementById('cp_note').value = custData.note || '';
@@ -389,25 +369,35 @@
             if(a.cog && a.cog.toLowerCase() === name.toLowerCase()) {
                 let price = parseFloat(a.price) || 0;
                 if(a.pagato) totalSpent += price;
-                history.push({ date: a.fullDate, serv: a.serv||'-', op: a.op||'-', price: price, pagato: a.pagato });
+                history.push({ date: a.fullDate, serv: a.serv||'-', op: a.op||'-', price: price });
             }
         });
 
-        document.getElementById('cp_spent').innerText = totalSpent.toFixed(2) + ' €';
+        document.getElementById('cp_spent').innerText = totalSpent.toFixed(2).replace('.', ',') + ' €';
         history.sort((a,b) => b.date.localeCompare(a.date));
         
         const hBody = document.getElementById('cp_history');
         hBody.innerHTML = history.map(h => {
-            const badge = h.pagato ? `<span style="color:var(--green); font-size:11px; font-weight:bold">PAGATO</span>` : `<span style="color:var(--red); font-size:11px; font-weight:bold">DA PAGARE</span>`;
-            return `<tr><td>${h.date.split('-').reverse().join('/')}</td><td><b>${h.serv}</b></td><td>${h.op}</td><td style="text-align:right"><b>${h.price.toFixed(2)}€</b> <br>${badge}</td></tr>`;
+            return `<tr><td>${h.date.split('-').reverse().join('/')}</td><td>Questa Struttura</td><td>${h.serv}<br><span style="font-size:11px;color:var(--text-muted)">Op: ${h.op}</span></td><td style="text-align:right"><b>€ ${h.price.toFixed(2).replace('.',',')}</b></td></tr>`;
         }).join('');
         
         if(history.length === 0) hBody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding:20px; color:var(--text-muted)'>Nessun trattamento registrato.</td></tr>";
 
+        const docsTable = document.getElementById('cp_docs_table');
+        if(docsTable) {
+            docsTable.innerHTML = "";
+            if(custData.docs && Object.keys(custData.docs).length > 0) {
+                Object.entries(custData.docs).forEach(([docId, doc]) => {
+                    docsTable.innerHTML += `<tr><td>${(doc.dataInserimento||'-').split(',')[0]}</td><td><b>${doc.nomeDoc}</b></td><td style="text-align:right"><a href="${doc.link}" target="_blank" class="btn-action btn-sm btn-outline" style="background:rgba(16,185,129,0.1); color:var(--green); border-color:var(--green);"><i class="material-icons-round">picture_as_pdf</i></a></td></tr>`;
+                });
+            } else { docsTable.innerHTML = "<tr><td colspan='3' style='text-align:center; padding:20px; color:var(--text-muted)'>Nessun file associato.</td></tr>"; }
+        }
+
         document.getElementById('customerProfileModal').style.display = 'flex';
+        sysOpenProfileTab('history');
     }
 
-    window.saveCustomerNote = function() {
+    window.sysSaveCustomerNote = function() {
         const note = document.getElementById('cp_note').value;
         if(window.currentOpenedCustomerId) {
             firebase.database().ref('MASTER_ADMIN_DB/global_customers/' + window.currentOpenedCustomerId).update({ note: note });
@@ -430,7 +420,6 @@
     function saveEdit() {
         const id = document.getElementById("eId").value; const selDate = document.getElementById("eDate").value; const oldDate = document.getElementById("eOldDate").value;
         const app = allApps.find(a => a.id === id); if(!app) return;
-
         app.ora = document.getElementById("eOra").value; app.cam = document.getElementById("eCam").value;
         app.cog = document.getElementById("eCog").value.trim(); app.tel = document.getElementById("eTel").value.trim();
         app.op = document.getElementById("eOp").value; app.note = document.getElementById("eNote").value;
@@ -450,6 +439,12 @@
         });
     }
 
+    function promptDelete(id, date) {
+        document.getElementById("eId").value = id; document.getElementById("eOldDate").value = date;
+        document.getElementById('delReasonInput').value = ""; document.getElementById('deleteModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('delReasonInput').focus(), 100);
+    }
+
     function confirmDelete() {
         const motivo = document.getElementById('delReasonInput').value.trim();
         if(!motivo) { showToast("Inserisci un motivo obbligatorio!"); return; }
@@ -466,15 +461,15 @@
                     firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + localStructId).child('deleted_apps').push(appToDel);
                 }
                 document.getElementById("deleteModal").style.display = "none"; document.getElementById("editModal").style.display = "none";
-                showToast("Eliminato e Registrato.");
+                showToast("Appuntamento Eliminato e Registrato.");
             });
         });
     }
 
     function shareWA() {
         const tel = document.getElementById("eTel").value;
-        if(tel) window.open(`https://wa.me/${tel}?text=Gentile%20Ospite,%20ti%20ricordiamo%20il%20tuo%20appuntamento%20nella%20nostra%20SPA.`, '_blank');
-        else showToast("Nessun numero inserito.");
+        if(tel) { window.open(`https://wa.me/${tel}?text=Gentile%20Ospite,%20ti%20ricordiamo%20il%20tuo%20appuntamento%20nella%20nostra%20SPA.`, '_blank'); } 
+        else { showToast("Nessun numero inserito."); }
     }
 </script>
 </body>

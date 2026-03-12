@@ -4,105 +4,174 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Agenda SPA - TOUCH WELNESS</title>
-<script>if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && window.innerWidth <= 768) { window.location.replace("Mobile.html"); }</script>
+
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && window.innerWidth <= 768) {
+        window.location.replace("Mobile.html");
+    }
+</script>
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <script src="DeviceSync.js"></script>
 <script src="System.js"></script>
 <script src="Menu.js"></script>
+
 <style>
-  :root { --bg-body: #0f172a; --bg-panel: #1e293b; --border-line: #334155; --text-main: #f8fafc; --text-muted: #94a3b8; --accent: #38bdf8; --gold: #fbbf24; --green: #10b981; --red: #ef4444; --purple: #a855f7; }
-  :root.light-theme { --bg-body: #f8fafc; --bg-panel: #ffffff; --border-line: #e2e8f0; --text-main: #0f172a; --text-muted: #64748b; }
+  :root { 
+      --bg-body: #0f172a; --bg-panel: #1e293b; --border-line: #334155; 
+      --text-main: #f8fafc; --text-muted: #94a3b8; 
+      --accent: #38bdf8; --gold: #fbbf24; --green: #10b981; --red: #ef4444; --purple: #a855f7;
+  }
+  :root.light-theme {
+      --bg-body: #f8fafc; --bg-panel: #ffffff; --border-line: #e2e8f0;
+      --text-main: #0f172a; --text-muted: #64748b;
+  }
+
   * { box-sizing: border-box; }
   body { font-family: -apple-system, sans-serif; background: var(--bg-body); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; color: var(--text-main); }
+  
   .navbar { background: var(--bg-body); color: var(--text-main); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 20; border-bottom: 1px solid var(--border-line); flex-shrink: 0; }
-  .btn-menu { background: var(--gold); color: #000; border: none; padding: 8px 15px; border-radius: 8px; font-weight: 900; cursor: pointer; display:flex; align-items:center; gap:5px; font-size: 13px; box-shadow: 0 3px 0 #b45309; transition:0.2s; }
+  
+  .btn-menu { background: var(--gold); color: #0f172a; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 900; cursor: pointer; display:flex; align-items:center; gap:8px; font-size: 14px; box-shadow: 0 3px 0 #b45309; transition:0.2s; }
   .btn-menu:active { transform: translateY(3px); box-shadow: none; }
+
   .date-ctrl { display: flex; align-items: center; gap: 8px; background: var(--bg-panel); padding: 6px; border-radius: 10px; border: 1px solid var(--border-line); }
   .btn-arrow { background: var(--accent); color: #0f172a; border: none; cursor: pointer; padding: 5px 8px; display: flex; align-items: center; justify-content: center; border-radius: 6px; }
-  input[type="date"], input[type="time"], input[type="text"], input[type="tel"], input[type="number"], select, textarea { outline: none; background: var(--bg-body); color: var(--text-main); color-scheme: dark; border: 1px solid var(--border-line); border-radius: 8px; transition:0.2s; }
-  input[type="date"].header-date { border: none; padding: 6px 10px; font-weight: 900; font-size: 16px; background: transparent; }
+  input[type="date"] { border: none; padding: 6px 10px; border-radius: 6px; font-weight: 900; font-size: 16px; outline: none; background: transparent; color: var(--text-main); color-scheme: dark; }
+
   .layout { display: flex; flex: 1; overflow: hidden; width: 100%; position: relative; }
+  
   .sidebar { width: 0; background: var(--bg-panel); border-right: 1px solid var(--border-line); transition: width 0.3s ease; overflow-y: auto; display: flex; flex-direction: column; flex-shrink: 0; }
   .sidebar.active { width: 380px; padding: 25px; border-right: 2px solid var(--accent); }
   .sidebar.request-mode { border-right-color: var(--purple); }
+  
   .grid-container { flex: 1; display: flex; gap: 12px; padding: 15px; overflow-x: auto; overflow-y: auto; background: var(--bg-body); position: relative; }
+
   .colonna { flex: 1; min-width: 280px; background: var(--bg-panel); border-radius: 16px; border: 1px solid var(--border-line); height: fit-content; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
   .col-head { background: rgba(0,0,0,0.2); color: var(--text-main); padding: 12px; text-align: center; font-weight: 800; font-size: 13px; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 2; text-transform: uppercase; }
+  
   .time-row { display: flex; height: 60px; border-bottom: 1px solid var(--border-line); }
   .time-lbl { width: 55px; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: var(--text-muted); border-right: 1px solid var(--border-line); flex-shrink: 0; }
+  
   .slot { flex: 1; cursor: pointer; position: relative; transition: 0.2s; }
   .slot:hover { background: rgba(56, 189, 248, 0.05); }
   .slot.drag-over { background: rgba(56, 189, 248, 0.2) !important; border: 2px dashed var(--accent) !important; z-index: 10; }
   .app-base.dragging { opacity: 0.5; transform: scale(0.95); }
+
   .app-base { background: #e0f2fe; color: #0c4a6e; border-left: 5px solid var(--accent); width: calc(100% - 4px); position: absolute; left: 2px; padding: 6px 10px; font-size: 11px; overflow:hidden; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; cursor: grab; transition: transform 0.1s; }
   .app-base:active { cursor: grabbing; }
-  
-  /* COLORI STATO APPUNTAMENTO (Base=Azzurro, Eseguito=Giallo, Pagato=Verde) */
-  .app-base.eseguito-style { background: #fef9c3 !important; color: #854d0e !important; border-left-color: #eab308 !important; }
-  .app-base.eseguito-style .app-note-preview { color: #854d0e !important; border-left-color: #ca8a04 !important; background: rgba(202, 138, 4, 0.1) !important;}
-  .app-base.eseguito-style .btn-quick-eseg { background: #eab308 !important; color: white !important; border-color: #ca8a04 !important; }
+  .app-note-preview { margin-top: 4px; background: rgba(0,0,0,0.1); border-left: 2px solid rgba(255,255,255,0.4); padding: 4px 6px; border-radius: 4px; font-size: 9px; color: inherit; font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-weight:bold;}
+  .btn-quick-eseg { background: white; border: 2px solid #bae6fd; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--accent); transition: 0.2s; flex-shrink: 0; margin-left: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); pointer-events: auto; }
 
-  .app-base.pagato-style { background: #dcfce7 !important; color: #064e3b !important; border-left-color: var(--green) !important; }
-  .app-base.pagato-style .app-note-preview { color: #064e3b !important; border-left-color: var(--green) !important; background: rgba(16, 185, 129, 0.1) !important; }
-  .app-base.pagato-style .btn-quick-eseg { background: var(--green) !important; color: white !important; border-color: var(--green) !important; }
+  .app-base.eseguito-style { background: #fef9c3 !important; color: #854d0e !important; border-left-color: #eab308 !important; }
+  .app-base.eseguito-style .app-note-preview { border-left-color: #ca8a04 !important; background: rgba(202, 138, 4, 0.1) !important;}
+  .app-base.eseguito-style .btn-quick-eseg { background: #eab308 !important; color: white !important; border-color: #ca8a04 !important; }
+  .app-base.pagato-style { background: #dcfce7 !important; color: #064e3b !important; border-left-color: #10b981 !important; }
+  .app-base.pagato-style .app-note-preview { border-left-color: #10b981 !important; background: rgba(16, 185, 129, 0.1) !important; }
+  .app-base.pagato-style .btn-quick-eseg { background: #10b981 !important; color: white !important; border-color: #059669 !important; }
   
   .app-base.req-style { background: #f3e8ff; color: #581c87; border-left-color: var(--purple); cursor: pointer; animation: pulseReq 2s infinite; }
   @keyframes pulseReq { 0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(168, 85, 247, 0); } 100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); } }
+
   .app-info-col { flex: 1; display: flex; flex-direction: column; overflow: hidden; pointer-events: none; }
-  .app-base b { font-size: 13px; color: inherit; text-transform: uppercase; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; }
+  .app-base b { font-size: 13px; color: inherit; text-transform: uppercase; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; cursor:pointer;}
+  
   .app-busy { background: rgba(0,0,0,0.1); width: 100%; height: 100%; position: absolute; top: 0; left: 0; border-left: 3px solid var(--border-line); z-index: 1; }
   .app-busy.req-busy { background: rgba(168, 85, 247, 0.1); border-left-color: var(--purple); }
-  .app-note-preview { margin-top: 4px; background: rgba(0,0,0,0.1); border-left: 2px solid rgba(255,255,255,0.4); padding: 4px 6px; border-radius: 4px; font-size: 9px; font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-weight:bold;}
-  .btn-quick-eseg { background: white; border: 2px solid #bae6fd; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--accent); transition: 0.2s; flex-shrink: 0; margin-left: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); pointer-events: auto; }
+
   .zoom-controls { position: fixed; bottom: 20px; right: 20px; background: var(--bg-panel); padding: 8px 15px; border-radius: 30px; border: 1px solid var(--border-line); display: flex; align-items: center; gap: 10px; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
   .zoom-controls i { cursor: pointer; color: var(--accent); font-size: 24px; user-select: none; transition: 0.2s; }
   .zoom-controls i:hover { transform: scale(1.1); }
   .zoom-controls input[type="range"] { width: 100px; accent-color: var(--accent); cursor: pointer; }
+
   .form-group { margin-bottom: 12px; width: 100%; position: relative; }
   .form-group label { display: block; font-size: 10px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
-  .form-input { width: 100%; padding: 12px; font-size: 13px; box-sizing: border-box; }
+  .form-input { width: 100%; padding: 12px; border: 1px solid var(--border-line); border-radius: 8px; font-size: 13px; outline:none; background: var(--bg-body); color: var(--text-main); color-scheme: dark; transition:0.2s; box-sizing: border-box; }
   .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3); }
+
+  .note-wrapper { background: var(--bg-body); border: 1px solid var(--border-line); border-radius: 8px; overflow: hidden; margin-bottom: 12px; transition: 0.2s; }
+  .note-wrapper:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3); }
+  .note-header { background: rgba(0,0,0,0.2); padding: 8px 12px; font-size: 10px; font-weight: bold; color: var(--accent); text-transform: uppercase; border-bottom: 1px solid var(--border-line); display: flex; align-items: center; gap: 5px; }
+  .note-wrapper textarea { width: 100%; border: none; background: transparent; color: var(--text-main); padding: 12px; font-size: 13px; font-family: inherit; resize: vertical; outline: none; box-sizing: border-box; }
+
   .btn-save { width: 100%; padding: 14px; background: var(--accent); color: #0f172a; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size:13px; box-sizing: border-box; }
   .btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
   .btn-outline { background: transparent !important; color: var(--text-main) !important; border: 1px solid var(--border-line) !important; }
+
+  .switch-container { display: flex; align-items: center; justify-content: space-between; background: var(--bg-body); padding: 12px 15px; border-radius: 8px; border: 1px solid var(--border-line); margin-bottom: 10px; }
+  .switch-lbl { font-size: 12px; font-weight: bold; color: var(--text-main); text-transform: uppercase; margin: 0; }
+  .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-line); transition: .4s; border-radius: 24px; }
+  .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow:0 2px 4px rgba(0,0,0,0.2);}
+  input:checked + .slider { background-color: var(--green); }
+  input:checked + .slider:before { transform: translateX(20px); }
+
+  .btn-add-service { width: 100%; padding: 12px; background: transparent; color: var(--text-main); border: 1px dashed var(--border-line); border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+  .selected-service-badge { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; cursor: pointer; }
+  .selected-service-badge .info b { color: var(--green); display: block; font-size: 13px; margin-bottom: 2px; }
+  .selected-service-badge .info span { color: var(--text-muted); font-size: 10px; font-weight: bold; }
+  .selected-service-badge .icon-del { color: var(--red); background: rgba(239, 68, 68, 0.2); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+
+  .autocomplete-box { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-panel); border: 1px solid var(--border-line); border-radius: 8px; max-height: 150px; overflow-y: auto; z-index: 99; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+  
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 4000; align-items: center; justify-content: center; backdrop-filter: blur(2px); padding: 15px; }
   .modal-box { background: var(--bg-panel); padding: 25px; border-radius: 16px; width: 90%; max-width: 400px; border: 1px solid var(--border-line); display:flex; flex-direction:column; max-height: 85vh; }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; }
-  .data-table th { color: var(--text-muted); padding: 10px; border-bottom: 2px solid var(--border-line); }
-  .data-table td { padding: 10px; border-bottom: 1px solid var(--border-line); color: var(--text-main); }
-  .stat-card { padding: 15px; text-align: center; background: var(--bg-body); border-radius: 12px; border: 1px solid var(--border-line); border-bottom: 3px solid var(--accent); }
+  .servizi-list-modal { display: flex; flex-direction: column; gap: 8px; flex:1; overflow-y: auto; margin-bottom: 15px; }
+  .serv-item { background: var(--bg-body); border: 1px solid var(--border-line); border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-main); }
+  .serv-item.active { border-color: var(--accent); background: rgba(56,189,248,0.1); }
+
+  /* TABELLA E CRM */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+  .data-table th { color: var(--text-muted); padding: 12px; border-bottom: 2px solid var(--border-line); font-size: 11px; text-transform: uppercase; background: var(--bg-body); position: sticky; top:0; z-index:2;}
+  .data-table td { padding: 12px; border-bottom: 1px solid var(--border-line); color: var(--text-main); }
+  .clickable:hover { background: rgba(56,189,248,0.05); cursor: pointer; }
+  
+  .stat-card { padding: 15px; text-align: center; background: var(--bg-body); border-radius: 12px; border: 1px solid var(--border-line); border-bottom: 4px solid var(--accent); }
   .stat-lbl { font-size: 10px; color: var(--text-muted); font-weight: bold; text-transform: uppercase; margin-bottom:5px; }
-  #toastBlue { visibility: hidden; min-width: 250px; background: #2563eb; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 9999; right: 30px; bottom: 30px; font-size: 13px; font-weight: bold; opacity: 0; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+
+  .tabs-header { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid var(--border-line); overflow-x: auto; padding-bottom:5px; }
+  .tab-btn { padding: 10px 15px; background: none; border: none; cursor: pointer; font-weight: bold; color: var(--text-muted); border-bottom: 3px solid transparent; white-space: nowrap; transition: 0.2s; }
+  .tab-btn:hover { color: var(--text-main); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  #toastBlue { visibility: hidden; min-width: 250px; background: var(--toast-blue, #2563eb); color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 9999; right: 30px; bottom: 30px; font-size: 13px; font-weight: bold; opacity: 0; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
   #toastBlue.show { visibility: visible; opacity: 1; bottom: 40px; }
+
 </style>
-<script>if(localStorage.getItem('tw_theme') === 'light') { document.documentElement.classList.add('light-theme'); }</script>
+<script>
+    if(localStorage.getItem('tw_theme') === 'light') { document.documentElement.classList.add('light-theme'); }
+</script>
 </head>
 <body onclick="closeSidebar(event)">
 
 <div id="toastBlue"><i class="material-icons-round" style="vertical-align:middle; margin-right:5px">info</i> <span id="toastMsg">Notifica</span></div>
-<script>if(!localStorage.getItem("tw_token")) window.location.href="login.html";</script>
 
 <div class="navbar">
   <div style="font-weight:900; color:var(--gold); letter-spacing:1px">TOUCH WELNESS <span style="font-size:10px; color:var(--text-muted)">AGENDA SPA</span></div>
-  <div class="date-ctrl">
+  <div class="date-ctrl" id="mainDateControls">
     <button class="btn-arrow" onclick="sysChangeDate(-1)"><i class="material-icons-round">chevron_left</i></button>
-    <input type="date" id="mainDate" class="header-date" onchange="window.render()">
+    <input type="date" id="mainDate" onchange="window.render()">
     <button class="btn-arrow" onclick="sysChangeDate(1)"><i class="material-icons-round">chevron_right</i></button>
   </div>
   <div style="display:flex; gap:10px;">
-      <button class="btn-menu" style="background:var(--purple); color:white;" onclick="openTabletSettings()">TABLET <i class="material-icons-round">tablet_mac</i></button>
       <button class="btn-menu" onclick="window.toggleMenu(event)">MENU <i class="material-icons-round">menu</i></button>
   </div>
 </div>
 
 <div class="layout">
+    
     <div class="sidebar" id="sideForm" onclick="event.stopPropagation()">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid var(--border-line); padding-bottom:10px;">
             <h3 style="color:var(--gold); margin:0; text-transform:uppercase;" id="sidebarTitle">Nuovo Appuntamento</h3>
             <i class="material-icons-round" style="cursor:pointer; color:var(--text-muted);" onclick="closeSidebar(null, true)">close</i>
         </div>
+        
         <input type="hidden" id="mId"><input type="hidden" id="mReqId"><input type="hidden" id="reqConfOldOra"><input type="hidden" id="mOldDate"><input type="hidden" id="aCab">
         
         <div style="display:flex; gap:10px; align-items:flex-end;">
@@ -111,19 +180,22 @@
                 <label>Orario</label>
                 <div style="display:flex; gap:5px;">
                     <input type="time" id="aOra" class="form-input" style="font-weight:bold; color:var(--accent); margin-bottom:0;">
-                    <button class="btn-save btn-outline" style="width:auto; padding:0 10px; margin:0;" onclick="window.sysEnableTimePick(event)" title="Cambia Orario in Griglia"><i class="material-icons-round">ads_click</i></button>
+                    <button class="btn-save btn-outline" style="width:auto; padding:0 10px; margin:0;" onclick="window.sysEnableTimePick(event)" title="Cambia Orario"><i class="material-icons-round">ads_click</i></button>
                 </div>
             </div>
         </div>
+        
         <div style="display:flex; gap:10px">
             <div class="form-group" style="flex:1"><label>Camera</label><input type="number" id="aCam" class="form-input" placeholder="N°"></div>
             <div class="form-group" style="flex:1.5"><label>Telefono</label><input type="tel" id="aTel" class="form-input" placeholder="Opzionale"></div>
         </div>
+        
         <div class="form-group">
             <label>Ospite (Cerca o Scrivi)</label>
             <input type="text" id="aCog" class="form-input" autocomplete="off" onkeyup="sysCheckCustomerInput()" placeholder="Nome Ospite...">
-            <div id="cogSuggestions" style="display:none; position:absolute; top:100%; left:0; width:100%; background:var(--bg-panel); border:1px solid var(--border-line); border-radius:8px; max-height:150px; overflow-y:auto; z-index:99; box-shadow:0 10px 20px rgba(0,0,0,0.5);"></div>
+            <div id="cogSuggestions" class="autocomplete-box"></div>
         </div>
+
         <div style="display:flex; gap:10px">
             <div class="form-group" style="flex:1"><label>Data Nascita</label><input type="date" id="aDataNascita" class="form-input"></div>
             <div class="form-group" style="flex:1"><label>Operatore</label><select id="aOp" class="form-input"></select></div>
@@ -132,20 +204,22 @@
         <input type="hidden" id="aServ"><input type="hidden" id="aDur" value="30"><input type="hidden" id="aPrice" value="0">
         <div id="serviceRenderArea"></div>
 
-        <div style="background:var(--bg-body); border:1px solid var(--border-line); border-radius:8px; overflow:hidden; margin-bottom:12px;">
-            <div style="background:rgba(0,0,0,0.2); padding:8px 12px; font-size:10px; font-weight:bold; color:var(--accent); text-transform:uppercase; border-bottom:1px solid var(--border-line);"><i class="material-icons-round" style="font-size:14px; vertical-align:middle">edit_note</i> Note</div>
-            <textarea id="aNote" rows="3" style="width:100%; border:none; background:transparent; color:var(--text-main); padding:12px; font-size:13px; resize:vertical; outline:none; box-sizing:border-box;"></textarea>
+        <div class="note-wrapper">
+            <div class="note-header"><i class="material-icons-round" style="font-size:14px">edit_note</i> Note</div>
+            <textarea id="aNote" rows="3" placeholder="Aggiungi una nota interna..."></textarea>
         </div>
         
-        <div id="eseguitoSwitchBox" style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-body); padding:12px 15px; border-radius:8px; border:1px solid var(--border-line); margin-bottom:12px; margin-top:15px;">
-            <label style="font-size:12px; font-weight:bold; color:var(--text-main); margin:0;">ESEGUITO</label>
-            <label style="position:relative; display:inline-block; width:44px; height:24px;">
-                <input type="checkbox" id="aEseguito" style="opacity:0; width:0; height:0;">
-                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border-line); border-radius:24px; transition:.4s;"></span>
-            </label>
+        <div class="switch-container" id="eseguitoSwitchBox" style="margin-top: 15px;">
+            <label class="switch-lbl" style="color:var(--gold)">TRATTAMENTO ESEGUITO</label>
+            <label class="switch"><input type="checkbox" id="aEseguito"><span class="slider"></span></label>
+        </div>
+
+        <div class="switch-container" id="pagatoSwitchBox">
+            <label class="switch-lbl" style="color:var(--green)">TRATTAMENTO PAGATO</label>
+            <label class="switch"><input type="checkbox" id="aPagato"><span class="slider"></span></label>
         </div>
         
-        <div class="privacy-box" style="margin-bottom:15px; padding:15px; border:1px dashed var(--accent); background:rgba(56, 189, 248, 0.05); border-radius:8px;" id="uiPrivacyBox">
+        <div class="privacy-box" style="margin-bottom: 15px; padding: 15px; border: 1px dashed var(--accent); background: rgba(56, 189, 248, 0.05); border-radius: 8px;" id="uiPrivacyBox">
             <label style="color:var(--accent); font-weight:bold; font-size:11px; display:block; margin-bottom:10px;"><i class="material-icons-round" style="font-size:14px; vertical-align:middle">verified_user</i> CONTRATTO E PRIVACY</label>
             <div style="display:flex; gap:10px; align-items:center;">
                 <button type="button" class="btn-save btn-outline" style="flex:1; margin:0; font-size:11px; padding:10px;" onclick="window.checkAndSendPrivacy()"><i class="material-icons-round" style="font-size:16px;">tablet_android</i> INVIA A TABLET</button>
@@ -153,42 +227,92 @@
             </div>
         </div>
         
-        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px; padding-bottom:50px;">
             <button class="btn-save" id="btnSaveAppStandard" onclick="sysSaveApp()"><i class="material-icons-round">save</i> SALVA IN AGENDA</button>
             <div id="editActionButtons" style="display:none; flex-direction:column; gap:10px;">
                 <button class="btn-save" style="background:rgba(16,185,129,0.1); color:var(--green); border:1px solid rgba(16,185,129,0.3);" onclick="sysShareWA()"><i class="material-icons-round">whatsapp</i> INVIA WHATSAPP</button>
-                <button class="btn-save" style="background:rgba(239,68,68,0.1); color:var(--red); border:1px solid rgba(239,68,68,0.3);" onclick="sysDelApp()"><i class="material-icons-round">delete</i> ELIMINA PRENOTAZIONE</button>
+                <button class="btn-save" style="background:rgba(239, 68, 68, 0.1); color:var(--red); border:1px solid rgba(239, 68, 68, 0.3);" onclick="sysDelApp()"><i class="material-icons-round">delete</i> ELIMINA</button>
             </div>
             <div id="reqActionButtons" style="display:none; flex-direction:column; gap:10px;">
                 <button class="btn-save" style="background:var(--purple); color:white" onclick="sysAcceptRequest()"><i class="material-icons-round">check_circle</i> ACCETTA IN AGENDA</button>
-                <button class="btn-save" style="background:rgba(239,68,68,0.1); color:var(--red); border:1px solid rgba(239,68,68,0.3);" onclick="sysPromptRejectRequest()"><i class="material-icons-round">cancel</i> RIFIUTA</button>
+                <button class="btn-save" style="background:rgba(239, 68, 68, 0.1); color:var(--red); border:1px solid rgba(239, 68, 68, 0.3);" onclick="sysPromptRejectRequest()"><i class="material-icons-round">cancel</i> RIFIUTA</button>
             </div>
         </div>
     </div>
+    
     <div class="grid-container" id="mainGrid"></div>
+
+    <div class="grid-container" id="crmView" style="display:none; flex-direction:column; padding:20px; align-items:center;">
+        <div style="width:100%; max-width:1000px; background:var(--bg-panel); border-radius:16px; border:1px solid var(--border-line); padding:20px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+            <h2 style="margin-top:0; color:var(--accent); display:flex; align-items:center; gap:10px; border-bottom:2px solid var(--border-line); padding-bottom:15px;">
+                <i class="material-icons-round">contact_page</i> Anagrafica Clienti SPA
+            </h2>
+            <div style="margin-bottom:20px; display:flex; gap:10px;">
+                <input type="text" id="searchLocalCRM" class="form-input" placeholder="Cerca cliente per nome o telefono..." onkeyup="sysRenderLocalCRM()" style="max-width:400px;">
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width:10%; text-align:center" title="Stato Documenti">PRIVACY</th>
+                            <th>NOME CLIENTE</th>
+                            <th>TELEFONO</th>
+                            <th>DATA NASCITA</th>
+                            <th style="text-align:right">SCHEDA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="localCRMTableBody">
+                        <tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted)">Caricamento...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div id="customerProfileModal" class="modal-overlay" onclick="if(event.target===this) this.style.display='none'">
-    <div class="modal-box" style="max-width: 600px; width: 95%;">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid var(--border-line); padding-bottom: 10px; margin-bottom: 20px;">
-            <h2 style="margin:0; color:var(--accent); font-size:18px;"><i class="material-icons-round" style="vertical-align:middle;">account_circle</i> <span id="cp_nome" style="text-transform:uppercase;">Cliente</span></h2>
-            <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;" onclick="document.getElementById('customerProfileModal').style.display='none'"><i class="material-icons-round">close</i></button>
+    <div class="modal-box" style="max-width: 850px; width: 95%;">
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 2px solid var(--border-line); padding-bottom: 15px; margin-bottom: 20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:24px; display:flex; align-items:center; gap:10px;">
+                <i class="material-icons-round" style="font-size:32px;">account_circle</i>
+                <span id="cp_nome" style="text-transform:uppercase;">Cliente</span>
+            </h2>
+            <button class="btn-icon" style="font-size:28px;" onclick="document.getElementById('customerProfileModal').style.display='none'"><i class="material-icons-round">close</i></button>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-            <div class="stat-card" style="border-bottom-color:var(--gold)"><div class="stat-lbl">Telefono</div><div id="cp_tel" style="font-size:15px; font-weight:bold; color:var(--text-main)">-</div></div>
-            <div class="stat-card" style="border-bottom-color:var(--accent)"><div class="stat-lbl">Data Nascita</div><div id="cp_dob" style="font-size:15px; font-weight:bold; color:var(--text-main)">-</div></div>
-            <div class="stat-card" style="border-bottom-color:var(--green)"><div class="stat-lbl">Spesa SPA</div><div id="cp_spent" style="font-size:16px; font-weight:900; color:var(--green)">0.00 €</div></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px;">
+            <div class="stat-card" style="border-bottom-color:var(--gold)"><div class="stat-lbl">Telefono</div><div id="cp_tel" style="font-size:18px; font-weight:bold; color:var(--text-main)">-</div></div>
+            <div class="stat-card" style="border-bottom-color:var(--accent)"><div class="stat-lbl">Data Nascita</div><div id="cp_dob" style="font-size:18px; font-weight:bold; color:var(--text-main)">-</div></div>
+            <div class="stat-card" style="border-bottom-color:var(--green)"><div class="stat-lbl">Spesa SPA (Rete)</div><div id="cp_spent" style="font-size:20px; font-weight:900; color:var(--green)">0.00 €</div></div>
         </div>
-        <div class="form-group" style="margin-bottom:20px;">
-            <label>Note Interne Cliente (Salvate nel CRM)</label>
-            <textarea id="cp_note" rows="2" class="form-input" placeholder="Preferenze, allergie, note generali..." onchange="sysSaveCustomerNote()"></textarea>
+
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="sysOpenProfileTab('history')">Storico e Note</button>
+            <button class="tab-btn" onclick="sysOpenProfileTab('docs')">Documenti Firmati</button>
         </div>
-        <h3 style="font-size:14px; color:var(--text-main); margin-top:0; border-bottom:1px solid var(--border-line); padding-bottom:5px;">Storico Trattamenti (Questa Struttura)</h3>
-        <div style="max-height:200px; overflow-y:auto; border:1px solid var(--border-line); border-radius:8px;">
-            <table class="data-table">
-                <thead><tr><th>Data</th><th>Trattamento</th><th>Operatore</th><th>Costo</th></tr></thead>
-                <tbody id="cp_history"></tbody>
-            </table>
+
+        <div id="tab-history" class="tab-content active">
+            <div class="form-group" style="margin-bottom:20px;">
+                <label>Note Interne Cliente (Condivise)</label>
+                <textarea id="cp_note" rows="2" class="form-input" style="font-size:14px;" placeholder="Preferenze, allergie, note generali..." onchange="sysSaveCustomerNote()"></textarea>
+            </div>
+            <div style="max-height:250px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);">
+                <table class="data-table">
+                    <thead><tr><th>Data</th><th>Struttura SPA</th><th>Trattamento / Operatore</th><th style="text-align:right;">Costo / Stato</th></tr></thead>
+                    <tbody id="cp_history"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-docs" class="tab-content">
+            <div style="max-height:250px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);">
+                <table class="data-table">
+                    <thead><tr><th>Data Firma</th><th>Nome Documento Registrato</th><th style="text-align:right;">Azione</th></tr></thead>
+                    <tbody id="cp_docs_table"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -197,10 +321,10 @@
     <div class="modal-box">
         <h3 style="margin-top:0; color:var(--text-main); font-size:15px; border-bottom:1px solid var(--border-line); padding-bottom:10px; margin-bottom:15px;">Seleziona Servizio</h3>
         <input type="text" id="searchServiceInput" class="form-input" placeholder="🔍 Cerca trattamento veloce..." onkeyup="sysFilterServices()" style="margin-bottom:15px;">
-        <div id="serviziUIList" style="display:flex; flex-direction:column; gap:8px; max-height:300px; overflow-y:auto; margin-bottom:15px;"></div>
+        <div class="servizi-list-modal" id="serviziUIList"></div>
         <div style="display:flex; gap:8px">
             <button class="btn-save btn-outline" style="flex:1; margin:0;" onclick="document.getElementById('serviceSelectModal').style.display='none'">ANNULLA</button>
-            <button class="btn-save" style="flex:1; margin:0; background:var(--green); color:white" onclick="sysConfirmServiceSelection()">CONFERMA</button>
+            <button class="btn-save" style="flex:1; margin:0; background:var(--green)" onclick="sysConfirmServiceSelection()">CONFERMA</button>
         </div>
     </div>
 </div>
@@ -212,7 +336,7 @@
         <input type="text" id="delReasonInput" class="form-input" placeholder="Scrivi il motivo..." style="margin-bottom: 20px;" onkeypress="if(event.key==='Enter'){ event.preventDefault(); sysConfirmDelete(); }">
         <div style="display:flex; gap:8px">
             <button class="btn-save btn-outline" style="flex:1; margin:0;" onclick="document.getElementById('deleteModal').style.display='none'">ANNULLA</button>
-            <button class="btn-save" style="flex:1; margin:0; background:var(--red); color:white;" onclick="sysConfirmDelete()">ELIMINA</button>
+            <button class="btn-save btn-del" style="flex:1; margin:0;" onclick="sysConfirmDelete()">CONFERMA ELIMINAZIONE</button>
         </div>
     </div>
 </div>
@@ -221,7 +345,7 @@
     <div class="modal-box" style="max-width: 350px; text-align: center;">
         <h3 style="margin-top:0; color:var(--purple); border-bottom:1px solid var(--border-line); padding-bottom:10px;"><i class="material-icons-round" style="vertical-align:middle">tablet_mac</i> CONFIGURA TABLET</h3>
         <div class="form-group" style="text-align:left;"><label>Username / ID Struttura</label><input type="text" id="tabUserConfig" class="form-input" readonly style="color:var(--accent); font-weight:bold; cursor:not-allowed;"></div>
-        <div class="form-group" style="text-align:left; margin-bottom:20px;"><label>Password Tablet</label><input type="text" id="tabPassConfig" class="form-input" placeholder="Es: 12345 o SPA2024"></div>
+        <div class="form-group" style="text-align:left; margin-bottom:20px;"><label>Password Tablet</label><input type="text" id="tabPassConfig" class="form-input" placeholder="Es: 12345"></div>
         <div style="display:flex; gap:8px">
             <button class="btn-save btn-outline" style="flex:1; margin:0;" onclick="document.getElementById('tabletConfigModal').style.display='none'">ANNULLA</button>
             <button class="btn-save" style="flex:1; margin:0; background:var(--purple); color:white;" onclick="saveTabletPassword()">SALVA DATI</button>
@@ -237,9 +361,9 @@
         });
     }
     function saveTabletPassword() {
-        const pass = document.getElementById('tabPassConfig').value.trim(); if(!pass) return alert("Inserisci una password valida.");
+        const pass = document.getElementById('tabPassConfig').value.trim(); if(!pass) return;
         firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + window.twStructId + '/settings/tabletPass').set(pass).then(() => {
-            document.getElementById('tabletConfigModal').style.display = 'none'; showToast("Password Tablet Salvata!");
+            document.getElementById('tabletConfigModal').style.display = 'none'; if(typeof showToast === 'function') showToast("Password Tablet Salvata!");
         });
     }
 </script>
@@ -253,7 +377,7 @@
 <script>
     window.checkAndSendPrivacy = function() {
         const structId = window.twStructId || localStorage.getItem('tw_structure_id');
-        if(!structId) return alert("Errore: ID Struttura non trovato.");
+        if(!structId) return alert("Errore ID.");
         const idInput = document.getElementById('mId'); const dateInput = document.getElementById('aDate');
         const appId = (idInput && idInput.value) ? idInput.value : "APP" + Date.now();
         const date = (dateInput && dateInput.value) ? dateInput.value : new Date().toISOString().split('T')[0];
@@ -269,10 +393,10 @@
             const allContracts = structData.contracts || {}; let docsPayload = [];
             
             if(activeDocNames.length === 0) {
-                docsPayload = [{ title: "Avviso", content: "Nessun documento configurato. Vai nel pannello Admin per generare i documenti." }];
+                docsPayload = [{ title: "Avviso", content: "Nessun documento configurato in Admin." }];
             } else {
                 activeDocNames.forEach(name => {
-                    let foundContent = "Testo non trovato o vuoto.";
+                    let foundContent = "Testo non trovato.";
                     for(let key in allContracts) {
                         let c = allContracts[key];
                         if((c.documentName || key) === name && c.testoGenerato) {
@@ -284,9 +408,14 @@
                 });
             }
             if(window.DeviceSync && typeof window.DeviceSync.sendToMobile === 'function') { window.DeviceSync.sendToMobile(appId, date, docsPayload); } 
-            else { alert("Svuota la cache del browser (CTRL+F5)!"); }
+            else { alert("Errore Sync. Svuota cache."); }
         });
     };
+    
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('view') === 'crm') { setTimeout(sysToggleLocalCRM, 500); }
+    });
 </script>
 </body>
 </html>

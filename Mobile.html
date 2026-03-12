@@ -51,7 +51,6 @@
   
   .slot.drag-over { background: rgba(56, 189, 248, 0.2) !important; border: 2px dashed var(--accent) !important; z-index: 10; box-shadow: inset 0 0 10px rgba(56,189,248,0.3); }
 
-  /* COLORI AGENDA MOBILE: ESEGUITO = GIALLO, PAGATO = VERDE */
   .app-base { background: #e0f2fe; color: #0c4a6e; border-left: 5px solid var(--accent); width: calc(100% - 6px); position: absolute; left: 3px; padding: 8px 12px; font-size: 12px; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: flex-start; z-index: 5; transition: transform 0.2s; }
   .app-base.dragging { opacity: 0.8; transform: scale(0.95); z-index: 9999; }
   
@@ -79,13 +78,11 @@
   
   .app-card.eseguito-style { background: #fef9c3 !important; border-color: #ca8a04 !important; border-left: 6px solid #eab308 !important; }
   .app-card.eseguito-style .app-name { color: #854d0e !important; }
-
   .app-card.pagato-style { background: #dcfce7 !important; border-color: #059669 !important; border-left: 6px solid #10b981 !important; }
   .app-card.pagato-style .app-name { color: #064e3b !important; }
   
   .app-id { font-size: 12px; color: var(--text-main); font-weight: bold; background:rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 6px; display: inline-block; width: fit-content; }
   .app-name { font-size: 18px; font-weight: 900; color: var(--text-main); text-transform: uppercase; cursor: pointer; transition: 0.2s; margin-top: 5px; }
-  .app-name:active { opacity: 0.7; }
   
   .app-actions { display: flex; gap: 8px; width: 100%; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px; justify-content: space-between; }
   .action-btn { flex:1; background: var(--bg-body); border: 1px solid var(--border-line); border-radius: 8px; padding: 12px; color: var(--text-muted); font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; text-align:center; transition:0.2s; }
@@ -101,13 +98,10 @@
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
   .stat-card { padding: 15px 10px; text-align: center; background: var(--bg-body); border-radius: 12px; border: 1px solid var(--border-line); border-bottom: 4px solid var(--accent); }
   .stat-val { font-size: 20px; font-weight: 900; color: var(--text-main); margin: 5px 0; }
-  .stat-lbl { font-size: 10px; color: var(--text-muted); font-weight: bold; text-transform: uppercase; }
-  .info-text { font-size: 14px; color: var(--text-main); background: var(--bg-body); padding: 12px; border-radius: 8px; border: 1px solid var(--border-line); font-weight: bold; margin-bottom: 10px; }
+  .stat-lbl { font-size: 10px; color: var(--text-muted); font-weight: bold; text-transform: uppercase; margin-bottom:4px;}
 
-  .theme-card { border: 2px solid var(--border-line); border-radius: 12px; padding: 15px; text-align:center; color: var(--text-main); background:var(--bg-body); flex:1; cursor: pointer; }
-  
   .mobile-bottom-bar { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-panel); border-top: 1px solid var(--border-line); z-index: 9000; justify-content: space-around; align-items: center; padding: 10px 0 calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -5px 20px rgba(0,0,0,0.5); }
-  .mobile-bottom-bar div { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.2s; width:20%; text-align:center; }
+  .mobile-bottom-bar div { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 9px; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.2s; width: 16.66%; text-align:center; }
   .mobile-bottom-bar div.active { color: var(--accent); }
   .mobile-bottom-bar i { font-size: 24px; }
 
@@ -137,21 +131,23 @@
   input:checked + .slider { background-color: var(--green); }
   input:checked + .slider:before { transform: translateX(22px); }
 
-  /* MEGA SCHEDA PROFILO CLIENTE MOBILE */
+  /* TABS E SCHEDA CLIENTE */
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; padding: 15px; }
   .modal-box { background: var(--bg-panel); padding: 25px; border-radius: 20px; width: 100%; max-width: 850px; max-height: 90vh; display:flex; flex-direction:column; border: 1px solid var(--border-line); overflow-y:auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
   
-  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
-  .data-table th { color: var(--text-muted); padding: 12px; border-bottom: 2px solid var(--border-line); font-size: 12px; text-transform: uppercase; background: var(--bg-body); position: sticky; top:0; }
+  .tabs-header { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid var(--border-line); overflow-x: auto; padding-bottom:5px; }
+  .tab-btn { padding: 10px 15px; background: none; border: none; cursor: pointer; font-weight: bold; color: var(--text-muted); border-bottom: 3px solid transparent; white-space: nowrap; transition: 0.2s; }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+  .data-table th { color: var(--text-muted); padding: 12px; border-bottom: 2px solid var(--border-line); font-size: 11px; text-transform: uppercase; background: var(--bg-body); position: sticky; top:0; z-index: 2; }
   .data-table td { padding: 12px; border-bottom: 1px solid var(--border-line); color: var(--text-main); }
 
   .servizi-list-modal { display: flex; flex-direction: column; gap: 8px; flex:1; overflow-y: auto; margin-bottom: 15px; }
   .serv-item { background: var(--bg-body); border: 1px solid var(--border-line); border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 10px; color: var(--text-main); }
-  .serv-item.active { border-color: var(--accent); background: rgba(56,189,248,0.1); }
   
-  .btn-add-service { width: 100%; padding: 15px; background: transparent; color: var(--text-main); border: 1px dashed var(--border-line); border-radius: 10px; font-size: 13px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; cursor: pointer; }
-  .selected-service-badge { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-
   #toastBlue { visibility: hidden; min-width: 250px; background: var(--accent); color: #0f172a; text-align: center; border-radius: 12px; padding: 16px; position: fixed; z-index: 10001; left: 50%; transform: translateX(-50%); top: 20px; font-size: 14px; font-weight: bold; opacity: 0; transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
   #toastBlue.show { visibility: visible; opacity: 1; top: 40px; }
 </style>
@@ -190,6 +186,15 @@
         </div>
     </div>
 
+    <div id="view-crm" class="app-view">
+        <div style="padding:15px; background:var(--bg-panel); border-bottom:1px solid var(--border-line);">
+            <input type="text" id="searchCrmMobile" class="form-input" placeholder="🔍 Cerca cliente in archivio..." onkeyup="m_renderCRM()">
+        </div>
+        <div id="crmMobileList" class="list-container">
+            <div style="text-align:center; padding:40px; color:var(--text-muted);">Sincronizzazione Rubrica...</div>
+        </div>
+    </div>
+
     <div id="view-piscina" class="app-view" style="padding:0;">
         <iframe src="Piscina/Piscina_GUI.html" class="iframe-container" id="iframePiscina"></iframe>
     </div>
@@ -216,13 +221,11 @@
             
             <h2 style="margin-top:20px;"><i class="material-icons-round">euro</i> Resoconto Netto</h2>
             <input type="month" id="commMonth" class="form-input" style="margin-bottom:15px;" onchange="m_calcCommissions()">
-            
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-lbl">Fisso</div><div class="stat-val" id="valFisso">0 €</div></div>
                 <div class="stat-card" style="border-bottom-color:var(--accent)"><div class="stat-lbl">Massaggi</div><div class="stat-val" id="valMassaggi" style="color:var(--accent);">0 €</div></div>
                 <div class="stat-card" style="border-bottom-color:#db2777; grid-column: 1 / -1;"><div class="stat-lbl">Percorsi SPA</div><div class="stat-val" id="valSpa" style="color:#db2777;">0 €</div></div>
             </div>
-            
             <div style="background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.3); border-radius:12px; padding:20px; text-align:center;">
                 <div style="font-size:12px; color:var(--green); font-weight:bold; text-transform:uppercase;">Totale Spettante</div>
                 <div id="valTotale" style="font-size:36px; font-weight:900; color:var(--text-main);">0.00 €</div>
@@ -235,26 +238,17 @@
                 <div class="theme-card" onclick="m_setTheme('dark')"><i class="material-icons-round" style="display:block; margin-bottom:5px;">dark_mode</i> Notte</div>
                 <div class="theme-card" onclick="m_setTheme('light')" style="border-color:var(--border-line);"><i class="material-icons-round" style="display:block; margin-bottom:5px; color:#f59e0b">light_mode</i> Giorno</div>
             </div>
-            
-            <div class="switch-container" style="margin-top:0; margin-bottom:20px;">
-                <div>
-                    <div class="switch-lbl" style="font-weight:bold; font-size:12px;">Tasto WhatsApp</div>
-                    <div style="font-size:10px; color:var(--text-muted);">Mostra in agenda.</div>
-                </div>
-                <label class="switch"><input type="checkbox" id="waToggle" onchange="m_toggleWA()"><span class="slider"></span></label>
-            </div>
-
             <button class="btn-save" style="background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.3); color:var(--red);" onclick="m_logout()">
                 <i class="material-icons-round">logout</i> DISCONNETTI
             </button>
         </div>
-
     </div>
 </div>
 
 <div class="mobile-bottom-bar">
     <div id="nav-agenda" class="active" onclick="m_switchView('agenda')"><i class="material-icons-round">calendar_today</i><span>Agenda</span></div>
     <div id="nav-lista" onclick="m_switchView('lista')"><i class="material-icons-round">list_alt</i><span>Lista</span></div>
+    <div id="nav-crm" onclick="m_switchView('crm')"><i class="material-icons-round">contact_page</i><span>Clienti</span></div>
     <div id="nav-piscina" onclick="m_switchView('piscina')"><i class="material-icons-round">pool</i><span>Piscina</span></div>
     <div id="nav-chat" onclick="m_switchView('chat')"><i class="material-icons-round">forum</i><span>Chat</span></div>
     <div id="nav-menu" onclick="m_switchView('menu')"><i class="material-icons-round">menu</i><span>Menu</span></div>
@@ -276,17 +270,32 @@
             <div class="stat-card" style="grid-column: 1 / -1; border-bottom-color:var(--green)"><div class="stat-lbl">Spesa SPA Totale</div><div id="cp_spent" style="font-size:22px; font-weight:900; color:var(--green)">0.00 €</div></div>
         </div>
 
-        <div class="form-group" style="margin-bottom:25px;">
-            <label style="font-size:13px;">Note Interne Cliente</label>
-            <textarea id="cp_note" rows="3" class="form-input" style="font-size:15px;" placeholder="Preferenze, allergie, note generali..." onchange="m_saveCustomerNote()"></textarea>
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="m_openProfileTab('history', event)">Storico e Note</button>
+            <button class="tab-btn" onclick="m_openProfileTab('docs', event)">Privacy Firmata</button>
         </div>
 
-        <h3 style="font-size:16px; color:var(--text-main); margin-top:0; border-bottom:1px solid var(--border-line); padding-bottom:8px; margin-bottom:15px;">Storico Trattamenti</h3>
-        <div style="max-height:250px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);">
-            <table class="data-table">
-                <thead><tr><th>Data</th><th>Trattamento</th><th>Operatore</th><th style="text-align:right;">Costo</th></tr></thead>
-                <tbody id="cp_history"></tbody>
-            </table>
+        <div id="tab-history" class="tab-content active">
+            <div class="form-group" style="margin-bottom:20px;">
+                <label style="font-size:13px;">Note Interne Cliente</label>
+                <textarea id="cp_note" rows="3" class="form-input" style="font-size:15px;" placeholder="Preferenze, allergie, note generali..." onchange="m_saveCustomerNote()"></textarea>
+            </div>
+            <h3 style="font-size:14px; color:var(--text-main); margin-top:0; border-bottom:1px solid var(--border-line); padding-bottom:8px; margin-bottom:15px;">Storico Trattamenti</h3>
+            <div style="max-height:250px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);">
+                <table class="data-table">
+                    <thead><tr><th>Data</th><th>Servizio</th><th style="text-align:right;">Stato</th></tr></thead>
+                    <tbody id="cp_history"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-docs" class="tab-content">
+            <div style="max-height:250px; overflow-y:auto; border:1px solid var(--border-line); border-radius:12px; background:var(--bg-body);">
+                <table class="data-table">
+                    <thead><tr><th>Data</th><th>Documento</th><th style="text-align:right;">Apri</th></tr></thead>
+                    <tbody id="cp_docs_table"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -327,10 +336,6 @@
             <button class="btn-save btn-wa" onclick="m_shareWA()"><i class="material-icons-round">whatsapp</i> INVIA WHATSAPP</button>
             <button class="btn-save btn-del" onclick="m_delApp()"><i class="material-icons-round">delete</i> ELIMINA APPUNTAMENTO</button>
         </div>
-        <div id="reqActionButtons" style="display:none; flex-direction:column; gap:10px;">
-            <button class="btn-save" style="background:var(--green); color:white;" onclick="m_acceptRequest()"><i class="material-icons-round">check_circle</i> ACCETTA E INSERISCI</button>
-            <button class="btn-save btn-del" onclick="m_rejectRequest()"><i class="material-icons-round">cancel</i> RIFIUTA RICHIESTA</button>
-        </div>
     </div>
 </div>
 <div class="mobile-backdrop" onclick="m_closeForm()"></div>
@@ -369,6 +374,7 @@
 
     firebase.database().ref('MASTER_ADMIN_DB/global_customers').on('value', snap => {
         globalCustomersList = Object.entries(snap.val() || {}).map(([k, v]) => ({ id: k, ...v }));
+        if(currentView === 'crm') m_renderCRM();
     });
 
     firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId).on('value', snap => {
@@ -401,6 +407,7 @@
 
         if(viewName === 'agenda') { title.innerText = "Agenda Cabine"; dCtrl.style.display = "flex"; }
         if(viewName === 'lista') { title.innerText = "Lista Completa"; dCtrl.style.display = "none"; }
+        if(viewName === 'crm') { title.innerText = "Anagrafica Clienti"; dCtrl.style.display = "none"; }
         if(viewName === 'piscina') { title.innerText = "Piscina e SPA"; dCtrl.style.display = "none"; }
         if(viewName === 'chat') { title.innerText = "Chat Interna"; dCtrl.style.display = "none"; m_switchChat('public'); }
         if(viewName === 'menu') { title.innerText = "Menu App"; dCtrl.style.display = "none"; }
@@ -418,44 +425,8 @@
     function m_renderAll() {
         if(currentView === 'agenda') m_renderAgenda();
         if(currentView === 'lista') m_renderLista();
+        if(currentView === 'crm') m_renderCRM();
         if(currentView === 'menu') { document.getElementById('waToggle').checked = db.settings.waEnabled !== false; }
-    }
-
-    /* CHAT */
-    let m_currentChatRoom = 'public';
-    function m_switchChat(room) {
-        m_currentChatRoom = room;
-        document.getElementById('btnChatDir').style.color = (room==='public')?'var(--accent)':'var(--text-muted)';
-        document.getElementById('btnChatDir').style.borderColor = (room==='public')?'var(--accent)':'var(--border-line)';
-        document.getElementById('btnChatRec').style.color = (room==='reception')?'var(--accent)':'var(--text-muted)';
-        document.getElementById('btnChatRec').style.borderColor = (room==='reception')?'var(--accent)':'var(--border-line)';
-        
-        const chatBox = document.getElementById('chatMessages');
-        chatBox.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; margin-top:20px;">Caricamento messaggi...</div>';
-        
-        firebase.database().ref(`MASTER_ADMIN_DB/structures_data/${sId}/chats/${m_currentChatRoom}`).on('value', snap => {
-            chatBox.innerHTML = '';
-            const msgs = snap.val() || {};
-            const arr = Object.values(msgs).sort((a,b)=>a.timestamp - b.timestamp);
-            if(arr.length === 0) { chatBox.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; margin-top:20px;">Nessun messaggio in questa stanza.</div>'; }
-            arr.forEach(m => {
-                const isMe = m.sender === uNick;
-                const align = isMe ? 'flex-end' : 'flex-start';
-                const bg = isMe ? 'var(--accent)' : 'var(--bg-panel)';
-                const col = isMe ? '#0f172a' : 'var(--text-main)';
-                chatBox.innerHTML += `<div style="align-self:${align}; max-width:80%; background:${bg}; color:${col}; padding:10px 15px; border-radius:15px; font-size:13px; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
-                    <div style="font-size:9px; opacity:0.7; margin-bottom:4px; font-weight:bold; text-transform:uppercase;">${m.sender} - ${m.date}</div>
-                    ${m.text}
-                </div>`;
-            });
-            setTimeout(() => chatBox.scrollTop = chatBox.scrollHeight, 100);
-        });
-    }
-    function m_sendChatMessage() {
-        const input = document.getElementById('chatMobileInput');
-        const txt = input.value.trim(); if(!txt) return;
-        const msg = { sender: uNick || "Staff SPA", text: txt, timestamp: Date.now(), date: new Date().toLocaleString('it-IT') };
-        firebase.database().ref(`MASTER_ADMIN_DB/structures_data/${sId}/chats/${m_currentChatRoom}`).push(msg).then(() => { input.value = ''; });
     }
 
     /* AGENDA CABINE */
@@ -475,15 +446,10 @@
             h += `<div class="colonna"><div class="col-head">CABINA ${c}</div>`;
             for(let i=10*60; i<=20*60; i+=10) {
                 const s = mToT(i); const sMin = i;
-                
                 const startApp = dayApps.find(x => x && x.ora === s && parseInt(x.cab) === c);
                 const busyApp = dayApps.find(x => { if(!x || !x.ora) return false; const start = tToM(x.ora); return parseInt(x.cab) === c && sMin > start && sMin < start + (parseInt(x.dur) || 30); });
-                
-                const startReq = dayReqs.find(x => x && x.ora === s && parseInt(x.cab) === c && x.status === 'pending');
-                const busyReq = dayReqs.find(x => { if(!x || !x.ora || x.status !== 'pending') return false; const start = tToM(x.ora); return parseInt(x.cab) === c && sMin > start && sMin < start + (parseInt(x.dur) || 30); });
 
                 if(startApp) {
-                    // COLORI
                     let isEseg = "";
                     if(startApp.pagato) isEseg = "pagato-style";
                     else if(startApp.eseguito) isEseg = "eseguito-style";
@@ -505,21 +471,6 @@
                           </div></div>`;
                 } else if(busyApp) {
                     h += `<div class="time-row"><div class="time-lbl">${s}</div><div class="slot"><div class="app-busy" onclick="m_openForm('${busyApp.id}')"></div></div></div>`;
-                } else if(startReq) {
-                    const slotsCount = Math.ceil((parseInt(startReq.dur) || 30) / 10);
-                    const hCss = `height: calc(${slotsCount * 100}% + ${slotsCount - 1}px - 6px); top: 3px;`;
-                    
-                    h += `<div class="time-row"><div class="time-lbl">${s}</div>
-                          <div class="slot">
-                            <div class="app-base req-style" style="${hCss}" onclick="m_openRequest('${startReq.id}')">
-                                <div class="app-info-col">
-                                    <b><i class="material-icons-round" style="font-size:12px">notifications_active</i> RICHIESTA SPA</b>
-                                    <span style="font-size:10px; opacity:0.9;">Cam ${startReq.cam || '?'} - ${startReq.serv || '-'}</span>
-                                </div>
-                            </div>
-                          </div></div>`;
-                } else if(busyReq) {
-                    h += `<div class="time-row"><div class="time-lbl">${s}</div><div class="slot"><div class="app-busy req-busy" onclick="m_openRequest('${busyReq.id}')"></div></div></div>`;
                 } else {
                     h += `<div class="time-row"><div class="time-lbl">${s}</div><div class="slot" data-ora="${s}" data-cab="${c}" onclick="m_openForm('', ${c}, '${s}')"></div></div>`;
                 }
@@ -532,79 +483,10 @@
     /* DRAG DROP TOUCH */
     let tTimer=null, isDrag=false, jDrag=false, dAppId=null, dEl=null, oX=0, oY=0;
     let lastDropTarget = null;
-
-    function m_touchStart(e, appId) {
-        if(e.touches.length !== 1) return;
-        const touch = e.touches[0]; const target = e.currentTarget;
-        tTimer = setTimeout(() => {
-            isDrag = true; dAppId = appId; dEl = target.cloneNode(true);
-            document.body.style.touchAction = 'none'; document.body.style.overflow = 'hidden';
-            dEl.style.position = 'fixed'; dEl.style.zIndex = '9999'; dEl.style.opacity = '0.9'; 
-            dEl.style.width = target.offsetWidth + 'px'; dEl.style.height = target.offsetHeight + 'px'; 
-            dEl.style.pointerEvents = 'none'; dEl.style.boxShadow = '0 10px 25px rgba(0,0,0,0.6)'; dEl.style.border = '2px solid var(--accent)';
-            document.body.appendChild(dEl);
-            const rect = target.getBoundingClientRect(); oX = touch.clientX - rect.left; oY = touch.clientY - rect.top;
-            dEl.style.left = (touch.clientX - oX) + 'px'; dEl.style.top = (touch.clientY - oY) + 'px';
-            if(navigator.vibrate) navigator.vibrate(50);
-            target.classList.add('dragging');
-        }, 400);
-    }
-
-    function m_touchMove(e) { 
-        if(!isDrag) { clearTimeout(tTimer); return; } 
-        e.preventDefault(); 
-        const touch = e.touches[0]; 
-        if(dEl) { 
-            dEl.style.left = (touch.clientX - oX) + 'px'; dEl.style.top = (touch.clientY - oY) + 'px'; 
-            const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-            const slot = dropTarget ? dropTarget.closest('.slot') : null;
-            if(lastDropTarget && lastDropTarget !== slot) { lastDropTarget.classList.remove('drag-over'); }
-            if(slot && !slot.querySelector('.app-busy') && slot.hasAttribute('data-ora')) { slot.classList.add('drag-over'); lastDropTarget = slot; }
-        } 
-    }
-
-    function m_touchEnd(e) {
-        clearTimeout(tTimer); e.currentTarget.classList.remove('dragging');
-        document.body.style.touchAction = ''; document.body.style.overflow = '';
-        if(lastDropTarget) { lastDropTarget.classList.remove('drag-over'); lastDropTarget = null; }
-        if(!isDrag) return; 
-        isDrag = false; jDrag = true; setTimeout(() => jDrag = false, 200);
-        if(dEl) {
-            const touch = e.changedTouches[0]; dEl.style.display = 'none';
-            const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY); dEl.remove(); dEl = null;
-            if(dropTarget) {
-                const slot = dropTarget.closest('.slot');
-                if(slot && slot.hasAttribute('data-ora') && !slot.querySelector('.app-busy')) { m_moveApp(dAppId, slot.getAttribute('data-ora'), slot.getAttribute('data-cab')); }
-            }
-        }
-        dAppId = null;
-    }
-
-    function m_moveApp(appId, newOra, newCab) {
-        const d = document.getElementById("mainDate").value; 
-        let apps = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d] || {});
-        const idx = apps.findIndex(x => x && x.id === appId);
-        if(idx > -1) {
-            const startMin = tToM(newOra); const appDur = parseInt(apps[idx].dur) || 30; const endMin = startMin + appDur;
-            let collision = apps.some(a => { if(!a || a.id === appId || parseInt(a.cab) !== parseInt(newCab)) return false; const aStart = tToM(a.ora); return (startMin < aStart + (parseInt(a.dur)||30) && endMin > aStart); });
-            if(collision) return showToast("Orario Occupato!");
-            apps[idx].ora = newOra; apps[idx].cab = newCab;
-            firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/app/' + d).set(apps).then(() => showToast("Spostato!"));
-        }
-    }
-
-    /* PINCH TO ZOOM */
-    let initialPinchDistance = null; let initialRowHeight = mRowHeight;
-    function getPinchDistance(touches) { return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY); }
-    document.getElementById('view-agenda').addEventListener('touchstart', function(e) { if (e.touches.length === 2) { initialPinchDistance = getPinchDistance(e.touches); initialRowHeight = mRowHeight; } }, {passive: false});
-    document.getElementById('view-agenda').addEventListener('touchmove', function(e) {
-        if (e.touches.length === 2 && initialPinchDistance) {
-            e.preventDefault(); const currentDistance = getPinchDistance(e.touches); const scale = currentDistance / initialPinchDistance;
-            let newHeight = initialRowHeight * scale; if (newHeight < 35) newHeight = 35; if (newHeight > 150) newHeight = 150; 
-            mRowHeight = newHeight; document.documentElement.style.setProperty('--row-height', mRowHeight + 'px');
-        }
-    }, {passive: false});
-    document.getElementById('view-agenda').addEventListener('touchend', function(e) { if (e.touches.length < 2) { initialPinchDistance = null; } });
+    function m_touchStart(e, appId) { if(e.touches.length !== 1) return; const touch = e.touches[0]; const target = e.currentTarget; tTimer = setTimeout(() => { isDrag = true; dAppId = appId; dEl = target.cloneNode(true); document.body.style.touchAction = 'none'; document.body.style.overflow = 'hidden'; dEl.style.position = 'fixed'; dEl.style.zIndex = '9999'; dEl.style.opacity = '0.9'; dEl.style.width = target.offsetWidth + 'px'; dEl.style.height = target.offsetHeight + 'px'; dEl.style.pointerEvents = 'none'; dEl.style.boxShadow = '0 10px 25px rgba(0,0,0,0.6)'; dEl.style.border = '2px solid var(--accent)'; document.body.appendChild(dEl); const rect = target.getBoundingClientRect(); oX = touch.clientX - rect.left; oY = touch.clientY - rect.top; dEl.style.left = (touch.clientX - oX) + 'px'; dEl.style.top = (touch.clientY - oY) + 'px'; if(navigator.vibrate) navigator.vibrate(50); target.classList.add('dragging'); }, 400); }
+    function m_touchMove(e) { if(!isDrag) { clearTimeout(tTimer); return; } e.preventDefault(); const touch = e.touches[0]; if(dEl) { dEl.style.left = (touch.clientX - oX) + 'px'; dEl.style.top = (touch.clientY - oY) + 'px'; const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY); const slot = dropTarget ? dropTarget.closest('.slot') : null; if(lastDropTarget && lastDropTarget !== slot) { lastDropTarget.classList.remove('drag-over'); } if(slot && !slot.querySelector('.app-busy') && slot.hasAttribute('data-ora')) { slot.classList.add('drag-over'); lastDropTarget = slot; } } }
+    function m_touchEnd(e) { clearTimeout(tTimer); e.currentTarget.classList.remove('dragging'); document.body.style.touchAction = ''; document.body.style.overflow = ''; if(lastDropTarget) { lastDropTarget.classList.remove('drag-over'); lastDropTarget = null; } if(!isDrag) return; isDrag = false; jDrag = true; setTimeout(() => jDrag = false, 200); if(dEl) { const touch = e.changedTouches[0]; dEl.style.display = 'none'; const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY); dEl.remove(); dEl = null; if(dropTarget) { const slot = dropTarget.closest('.slot'); if(slot && slot.hasAttribute('data-ora') && !slot.querySelector('.app-busy')) { m_moveApp(dAppId, slot.getAttribute('data-ora'), slot.getAttribute('data-cab')); } } } dAppId = null; }
+    function m_moveApp(appId, newOra, newCab) { const d = document.getElementById("mainDate").value; let apps = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d] || {}); const idx = apps.findIndex(x => x && x.id === appId); if(idx > -1) { const startMin = tToM(newOra); const appDur = parseInt(apps[idx].dur) || 30; const endMin = startMin + appDur; let collision = apps.some(a => { if(!a || a.id === appId || parseInt(a.cab) !== parseInt(newCab)) return false; const aStart = tToM(a.ora); return (startMin < aStart + (parseInt(a.dur)||30) && endMin > aStart); }); if(collision) return showToast("Orario Occupato!"); apps[idx].ora = newOra; apps[idx].cab = newCab; firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/app/' + d).set(apps).then(() => showToast("Spostato!")); } }
 
     /* VISTA LISTA MOBILE */
     function m_renderLista() {
@@ -642,15 +524,67 @@
     }
 
     function m_toggleState(id, date, field) { let apps = Array.isArray(db.app[date]) ? db.app[date] : Object.values(db.app[date]); const idx = apps.findIndex(x => x && x.id === id); if(idx > -1) { apps[idx][field] = !apps[idx][field]; firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/app/' + date).set(apps); } }
-    function m_delAppFromList(id, d) { const m = prompt("Motivazione dell'annullamento:"); if(m === null) return; let apps = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d]); const appToDel = apps.find(x => x.id === id); apps = apps.filter(x => x.id !== id); firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/app/' + d).set(apps).then(() => { if(appToDel) { appToDel.deleteReason = m || "Nessuna motivazione"; appToDel.date = d; appToDel.deletedAt = new Date().toLocaleString('it-IT'); firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/deleted_apps').push(appToDel); } showToast("Eliminato!"); m_renderLista(); }); }
+    function m_delAppFromList(id, d) { const m = prompt("Motivazione:"); if(m === null) return; let apps = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d]); const appToDel = apps.find(x => x.id === id); apps = apps.filter(x => x.id !== id); firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/app/' + d).set(apps).then(() => { if(appToDel) { appToDel.deleteReason = m || "Nessuna motivazione"; appToDel.date = d; appToDel.deletedAt = new Date().toLocaleString('it-IT'); firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/deleted_apps').push(appToDel); } showToast("Eliminato!"); m_renderLista(); }); }
 
-    // MEGA POPUP CLIENTE MOBILE
+    /* VISTA CRM MOBILE (Tutti i Clienti) */
+    function m_renderCRM() {
+        const container = document.getElementById("crmMobileList");
+        const query = (document.getElementById("searchCrmMobile").value || "").toLowerCase();
+        
+        let structClients = [];
+        let namesInStruct = new Set();
+        Object.values(db.app).forEach(day => {
+            let dayApps = Array.isArray(day) ? day : Object.values(day);
+            dayApps.forEach(a => { if(a && a.cog) namesInStruct.add(a.cog.toLowerCase().trim()); });
+        });
+
+        globalCustomersList.forEach(c => {
+            if(c.structId === sId || namesInStruct.has((c.nome||'').toLowerCase().trim())) {
+                if(!query || (c.nome||'').toLowerCase().includes(query) || (c.tel||'').includes(query)) {
+                    structClients.push(c);
+                }
+            }
+        });
+
+        structClients.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+        
+        if(structClients.length === 0) {
+            container.innerHTML = "<div style='text-align:center; padding:30px; color:var(--text-muted)'>Nessun cliente trovato.</div>";
+            return;
+        }
+
+        container.innerHTML = structClients.map(c => {
+            const hasPrivacy = c.docs && Object.keys(c.docs).length > 0;
+            const dotColor = hasPrivacy ? 'var(--green)' : 'var(--red)';
+            const dateStr = c.dataNascita ? c.dataNascita.split('-').reverse().join('/') : 'N.D.';
+            const safeName = (c.nome || 'N.D.').replace(/'/g, "\\'");
+
+            return `<div class="app-card" onclick="m_openCustomerProfile(event, '${safeName}')" style="flex-direction:row; align-items:center; gap:15px; border-left-color:${dotColor}; cursor:pointer;">
+                <div style="width:14px; height:14px; border-radius:50%; background:${dotColor}; box-shadow:0 0 5px ${dotColor}; flex-shrink:0;"></div>
+                <div style="flex:1">
+                    <div style="font-weight:900; font-size:16px; color:var(--text-main); text-transform:uppercase;">${c.nome}</div>
+                    <div style="font-size:12px; color:var(--text-muted); margin-top:4px;"><i class="material-icons-round" style="font-size:12px; vertical-align:middle;">phone</i> ${c.tel || 'N.D.'} &nbsp;|&nbsp; Nato: ${dateStr}</div>
+                </div>
+                <i class="material-icons-round" style="color:var(--text-muted);">chevron_right</i>
+            </div>`;
+        }).join('');
+    }
+
+    /* MEGA POPUP CLIENTE MOBILE CON TAB */
     window.currentOpenedCustomerId = null;
+    
+    window.m_openProfileTab = function(tabName, event) {
+        document.querySelectorAll('#customerProfileModal .tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('#customerProfileModal .tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    };
+
     window.m_openCustomerProfile = function(e, name) {
         e.stopPropagation();
         if(!name || name === 'N.D.') return;
         
-        let custData = { tel: 'N.D.', dataNascita: 'N.D.', note: '' };
+        let custData = { tel: 'N.D.', dataNascita: 'N.D.', note: '', docs: {} };
         let custId = null;
         const target = globalCustomersList.find(c => c.nome && c.nome.toLowerCase() === name.toLowerCase());
         
@@ -662,6 +596,7 @@
         document.getElementById('cp_note').value = custData.note || '';
         window.currentOpenedCustomerId = custId;
 
+        // Storico
         let history = []; let totalSpent = 0;
         Object.keys(db.app).forEach(d => {
             let dayApps = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d]);
@@ -680,27 +615,46 @@
         const hBody = document.getElementById('cp_history');
         hBody.innerHTML = history.map(h => {
             const badge = h.pagato ? `<span style="color:var(--green); font-size:11px; font-weight:bold">PAGATO</span>` : `<span style="color:var(--red); font-size:11px; font-weight:bold">DA PAGARE</span>`;
-            return `<tr><td>${h.date.split('-').reverse().join('/')}</td><td><b>${h.serv}</b></td><td>${h.op}</td><td style="text-align:right"><b>${h.price.toFixed(2)}€</b> <br>${badge}</td></tr>`;
+            return `<tr><td>${h.date.split('-').reverse().join('/')}</td><td><b>${h.serv}</b><br><span style="font-size:11px;color:var(--text-muted)">Op: ${h.op}</span></td><td style="text-align:right"><b>${h.price.toFixed(2)}€</b> <br>${badge}</td></tr>`;
         }).join('');
         
-        if(history.length === 0) hBody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding:20px; color:var(--text-muted)'>Nessun trattamento registrato.</td></tr>";
+        if(history.length === 0) hBody.innerHTML = "<tr><td colspan='3' style='text-align:center; padding:20px; color:var(--text-muted)'>Nessun trattamento registrato.</td></tr>";
+
+        // Documenti
+        const docsTable = document.getElementById('cp_docs_table');
+        if(docsTable) {
+            docsTable.innerHTML = "";
+            if(custData.docs && Object.keys(custData.docs).length > 0) {
+                Object.entries(custData.docs).forEach(([docId, doc]) => {
+                    docsTable.innerHTML += `<tr>
+                        <td style="font-size:12px;">${(doc.dataInserimento || '-').split(',')[0]}</td>
+                        <td><b>${doc.nomeDoc || 'Documento'}</b></td>
+                        <td style="text-align:right"><a href="${doc.link}" target="_blank" class="btn-action btn-sm btn-outline" style="background:rgba(16,185,129,0.1); color:var(--green); border-color:var(--green);"><i class="material-icons-round">picture_as_pdf</i></a></td>
+                    </tr>`;
+                });
+            } else { docsTable.innerHTML = "<tr><td colspan='3' style='text-align:center; padding:20px; color:var(--text-muted)'>Nessun documento firmato.</td></tr>"; }
+        }
 
         document.getElementById('customerProfileModal').style.display = 'flex';
+        
+        // Reset alla prima tab
+        document.querySelectorAll('#customerProfileModal .tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('#customerProfileModal .tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-history').classList.add('active');
+        document.querySelectorAll('#customerProfileModal .tab-btn')[0].classList.add('active');
     }
 
     window.m_saveCustomerNote = function() {
         const note = document.getElementById('cp_note').value;
         if(window.currentOpenedCustomerId) {
             firebase.database().ref('MASTER_ADMIN_DB/global_customers/' + window.currentOpenedCustomerId).update({ note: note });
-            showToast("Note aggiornate nel CRM!");
+            showToast("Note salvate!");
         }
     };
 
     /* MENU PROFILO */
     function m_renderProfilo() { if(!uData) return; document.getElementById("prof_name").innerText = `${uData.name || ''} ${uData.surname || ''}`; document.getElementById("prof_nick").innerText = uData.nick || ''; }
     function m_calcCommissions() { if(!uData) return; const period = document.getElementById("commMonth").value; const comm = uData.commissions || {}; const fisso = parseFloat(comm.fisso) || 0; const ivaPerc = parseFloat(comm.iva) || 0; const pMas = parseFloat(comm.op_massaggi) || 0; const pSpa = parseFloat(comm.op_spa) || 0; let tMas = 0, tSpa = 0; Object.keys(db.app).forEach(dateStr => { if(dateStr.startsWith(period)) { let dayApps = Array.isArray(db.app[dateStr]) ? db.app[dateStr] : Object.values(db.app[dateStr]); dayApps.forEach(a => { if(a && a.eseguito && a.pagato && (a.op === uData.nick || a.op === uData.name)) { let lordo = parseFloat(a.price) || parseFloat(a.prezzo) || 0; let netto = lordo / (1 + (ivaPerc / 100)); let sName = (a.serv || "").toLowerCase(); if(sName.includes('spa') || sName.includes('percors')) tSpa += netto * (pSpa/100); else tMas += netto * (pMas/100); } }); } }); document.getElementById('valFisso').innerText = fisso.toFixed(2) + " €"; document.getElementById('valMassaggi').innerText = tMas.toFixed(2) + " €"; document.getElementById('valSpa').innerText = tSpa.toFixed(2) + " €"; document.getElementById('valTotale').innerText = (fisso + tMas + tSpa).toFixed(2) + " €"; }
-    function m_toggleWA() { firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId + '/settings').update({waEnabled: document.getElementById('waToggle').checked}); }
-    function m_setTheme(t) { localStorage.setItem('tw_theme', t); if(t==='light') document.documentElement.classList.add('light-theme'); else document.documentElement.classList.remove('light-theme'); showToast("Tema Aggiornato"); }
     function m_logout() { localStorage.clear(); window.location.href="login.html"; }
 
     /* FORM BOTTOM SHEET */
@@ -710,19 +664,11 @@
             let targetApp = null; let tDate = null; Object.keys(db.app).forEach(d => { let arr = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d]); let found = arr.find(x => x && x.id === id); if(found) { targetApp = found; tDate = d; } });
             if(!targetApp) return;
             document.getElementById("formTitle").innerText = "Modifica Appuntamento"; document.getElementById("formTitle").style.color = "var(--gold)"; document.getElementById("fId").value = id; document.getElementById("fDate").value = tDate; document.getElementById("fOldDate").value = tDate; document.getElementById("fReqId").value = ""; document.getElementById("fOra").value = targetApp.ora; document.getElementById("fCab").value = targetApp.cab; document.getElementById("fCam").value = targetApp.cam; document.getElementById("fTel").value = targetApp.tel || ""; document.getElementById("fCog").value = targetApp.cog || ""; document.getElementById("fOp").value = targetApp.op || ""; document.getElementById("fNote").value = targetApp.note || ""; document.getElementById("fEseguito").checked = targetApp.eseguito || false; document.getElementById("fServ").value = targetApp.serv || ""; document.getElementById("fDur").value = targetApp.dur || 30; document.getElementById("fPrice").value = targetApp.price || 0;
-            document.getElementById("eseguitoSwitchBox").style.display = "flex"; document.getElementById("btnSaveAppStandard").style.display = "flex"; document.getElementById("editActionButtons").style.display = "flex"; document.getElementById("reqActionButtons").style.display = "none";
+            document.getElementById("eseguitoSwitchBox").style.display = "flex"; document.getElementById("btnSaveAppStandard").style.display = "flex"; document.getElementById("editActionButtons").style.display = "flex";
         } else {
             document.getElementById("formTitle").innerText = "Nuovo Appuntamento"; document.getElementById("formTitle").style.color = "var(--gold)"; document.getElementById("fId").value = ""; document.getElementById("fReqId").value = ""; let cd = document.getElementById("mainDate").value || new Date().toISOString().split('T')[0]; document.getElementById("fDate").value = cd; document.getElementById("fOldDate").value = cd; document.getElementById("fOra").value = ora; document.getElementById("fCab").value = cab; ['fCam','fTel','fCog','fOp','fNote','fServ'].forEach(x => document.getElementById(x).value=""); document.getElementById("fDur").value = "30"; document.getElementById("fPrice").value = "0"; document.getElementById("fEseguito").checked = false; 
-            document.getElementById("eseguitoSwitchBox").style.display = "flex"; document.getElementById("btnSaveAppStandard").style.display = "flex"; document.getElementById("editActionButtons").style.display = "none"; document.getElementById("reqActionButtons").style.display = "none";
+            document.getElementById("eseguitoSwitchBox").style.display = "flex"; document.getElementById("btnSaveAppStandard").style.display = "flex"; document.getElementById("editActionButtons").style.display = "none";
         }
-        m_renderServiceBox(); document.getElementById("appFormSheet").classList.add("active");
-    }
-
-    function m_openRequest(reqId) {
-        if(jDrag) return; const d = document.getElementById("mainDate").value; let reqs = Array.isArray(db.requests[d]) ? db.requests[d] : Object.values(db.requests[d] || {}); const req = reqs.find(x => x && x.id === reqId); if(!req) return;
-        const sel = document.getElementById("fOp"); sel.innerHTML = '<option value="">-- Operatore --</option>'; db.staff.forEach(s => { if(s.nome) sel.innerHTML += `<option value="${s.nome}">${s.nome}</option>`; });
-        document.getElementById("formTitle").innerText = "GESTISCI RICHIESTA"; document.getElementById("formTitle").style.color = "var(--purple)"; document.getElementById("fId").value = ""; document.getElementById("fReqId").value = req.id; document.getElementById("fReqOldOra").value = req.ora; document.getElementById("fDate").value = d; document.getElementById("fOldDate").value = d; document.getElementById("fOra").value = req.ora; document.getElementById("fCab").value = req.cab; document.getElementById("fCam").value = req.cam || ""; document.getElementById("fTel").value = req.tel || ""; document.getElementById("fCog").value = req.cog || ""; document.getElementById("fOp").value = ""; document.getElementById("fNote").value = req.note || ""; document.getElementById("fEseguito").checked = false; document.getElementById("fServ").value = req.serv || ""; document.getElementById("fDur").value = req.dur || 30; document.getElementById("fPrice").value = req.price || 0;
-        document.getElementById("eseguitoSwitchBox").style.display = "none"; document.getElementById("btnSaveAppStandard").style.display = "none"; document.getElementById("editActionButtons").style.display = "none"; document.getElementById("reqActionButtons").style.display = "flex";
         m_renderServiceBox(); document.getElementById("appFormSheet").classList.add("active");
     }
 
@@ -741,23 +687,6 @@
         let apps = Array.isArray(db.app[date]) ? db.app[date] : Object.values(db.app[date] || {});
         if(id && oldDate === date) { const i = apps.findIndex(x => x.id === id); if(i > -1) { obj.pagato = apps[i].pagato; obj.fromReception = apps[i].fromReception; obj.reqId = apps[i].reqId; apps[i] = obj; } else apps.push(obj); } else { apps.push(obj); }
         dbRefLocal.child(date).set(apps).then(() => { m_closeForm(); showToast("Salvato!"); m_renderLista(); });
-    }
-
-    function m_acceptRequest() {
-        const reqId = document.getElementById('fReqId').value; const d = document.getElementById("fDate").value; const confOra = document.getElementById('fOra').value; const oldOra = document.getElementById('fReqOldOra').value; const sName = document.getElementById('fServ').value;
-        if(!document.getElementById("fCam").value || !sName) return showToast("Mancano dati obbligatori!");
-        let reqs = Array.isArray(db.requests[d]) ? db.requests[d] : Object.values(db.requests[d] || {}); const req = reqs.find(x => x && x.id === reqId); if(!req) return;
-        const newApp = { id: "APP" + Date.now(), reqId: reqId, ora: confOra, cab: document.getElementById("fCab").value, cam: document.getElementById("fCam").value, cog: document.getElementById("fCog").value.trim(), tel: document.getElementById("fTel").value.trim(), serv: sName, dur: parseInt(document.getElementById("fDur").value) || 30, price: parseFloat(document.getElementById("fPrice").value) || 0, op: document.getElementById("fOp").value, note: document.getElementById("fNote").value, eseguito: false, pagato: false, fromReception: true };
-        const dbRefLocal = firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId); let apps = Array.isArray(db.app[d]) ? db.app[d] : Object.values(db.app[d] || {}); apps.push(newApp); req.status = 'accepted';
-        const isChanged = confOra !== oldOra; const logMsg = isChanged ? `L'appuntamento è stato inserito in agenda modificando l'orario (Da ${oldOra} a ${confOra}).` : `L'appuntamento è stato confermato regolarmente.`;
-        Promise.all([ dbRefLocal.child('app').child(d).set(apps), dbRefLocal.child('requests').child(d).set(reqs), dbRefLocal.child('requests_log').child(reqId).update({ type: isChanged ? 'modified-accepted' : 'accepted', ora: confOra, msg: logMsg, date: new Date().toLocaleString('it-IT'), timestamp: Date.now() }) ]).then(() => { m_closeForm(); showToast("Confermato e Inserito!"); });
-    }
-
-    function m_rejectRequest() {
-        const motivo = prompt("Motivazione del rifiuto (Obbligatoria):"); if(!motivo) { showToast("Devi inserire un motivo per rifiutare."); return; }
-        const reqId = document.getElementById("fReqId").value; const d = document.getElementById("fDate").value; let reqs = Array.isArray(db.requests[d]) ? db.requests[d] : Object.values(db.requests[d] || {}); const req = reqs.find(x => x && x.id === reqId); if(!req) return; req.status = 'rejected';
-        const dbRefLocal = firebase.database().ref('MASTER_ADMIN_DB/structures_data/' + sId);
-        Promise.all([ dbRefLocal.child('requests').child(d).set(reqs), dbRefLocal.child('requests_log').child(reqId).update({ type: 'rejected', msg: `Richiesta RIFIUTATA. Motivo: ${motivo}`, date: new Date().toLocaleString('it-IT'), timestamp: Date.now() }) ]).then(() => { m_closeForm(); showToast("Richiesta Rifiutata."); });
     }
 
     function m_delApp() {

@@ -35,7 +35,12 @@
   .btn-add { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; font-weight: bold; border-radius: 10px; cursor: pointer; margin-top: 5px; transition: 0.2s; }
   .btn-add.editing { background: var(--gold); color: var(--primary); }
 
-  .summary-panel, .list-panel { background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+  /* FIX DEL PROBLEMA CONTATORI: Ora il summary-panel non si schiaccia mai (flex-shrink: 0) */
+  .summary-panel { flex-shrink: 0; background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+  
+  /* FIX DELLA LISTA APPUNTAMENTI: Si prende lo spazio rimanente e scorre internamente (min-height: 0) */
+  .list-panel { flex: 1; min-height: 0; background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 2px 5px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+
   .summary-header { background: var(--primary); color: white; padding: 10px; font-weight: bold; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
   .sum-table, .row { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; }
   .sum-table th { background: #f8fafc; padding: 8px; color: #64748b; border-bottom: 2px solid var(--line); border-right: 1px solid #e2e8f0; }
